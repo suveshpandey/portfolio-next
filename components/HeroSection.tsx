@@ -17,13 +17,13 @@ const downloadResume = () => {
   document.body.removeChild(link);
 };
 
-export default function HeroWithStats() {
+export default function HeroSection() {
   return (
     <section className="w-full min-h-screen h-auto flex flex-col md:flex-row items-center justify-between overflow-hidden pt-28 sm:pt-0">
       <div className="w-[90%] sm:w-[50%] h-auto flex flex-col items-center">
         <div className="w-full flex flex-col gap-y-6">
           <div className="w-full flex flex-col sm:flex-row gap-x-10 gap-y-4 items-center sm:justify-start justify-center">
-            <Image src="/images/profilePic.jpg" alt="profile" width={128} height={128} className="w-30 h-30 sm:w-32 sm:h-32 rounded-full ring-2 ring-neutral-800 object-cover shadow-lg" />
+            <Image src="/images/profilePic.jpg" alt="profile" width={128} height={128} className="w-30 h-30 sm:w-35 sm:h-35 rounded-full ring-2 ring-neutral-800 object-cover shadow-lg" />
             <div className="flex flex-col gap-y-2 justify-center sm:items-start items-center">
               <motion.h1 variants={container(0)} initial="hidden" animate="visible" className="w-full text-4xl sm:text-5xl font-medium tracking-tight text-slate-300">
                 Suvesh Pandey

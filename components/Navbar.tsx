@@ -1,62 +1,162 @@
 "use client";
-import { FaLinkedinIn, FaGithub, FaXTwitter, FaArrowUp } from "react-icons/fa6";
-import { MdChevronRight, MdChevronLeft } from "react-icons/md";
+import { useState, useEffect } from "react";
+import { FaLinkedinIn, FaGithub, FaArrowUp, FaBars, FaTimes } from "react-icons/fa";
+import { BsTwitterX } from "react-icons/bs";
 
 export default function Navbar() {
-  const handleIconClick = (url: string) => {
-    window.open(url, "_blank");
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const navItems = ["about", "projects", "technologies", "contact"];
+  const socials = [
+    { icon: <FaLinkedinIn />, url: "https://www.linkedin.com/in/suvesh-pandey/" },
+    { icon: <FaGithub />, url: "https://github.com/suveshpandey" },
+    { icon: <BsTwitterX />, url: "https://x.com/suvesh_298" },
+  ];
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) section.scrollIntoView({ behavior: "smooth" });
+    setMenuOpen(false);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
     <>
-      <nav className="w-full fixed z-50 top-3 left-0">
-        <div className="sm:w-[80%] md:w-[90%] lg:w-[60%] mx-auto">
-          <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl shadow-lg">
-            <div className="flex items-center justify-between sm:py-4 py-3 sm:px-6 px-4">
-              <div className="flex items-center text-2xl">
-                <MdChevronLeft className="text-white/70" />
-                <h1 className="cursor-pointer bg-linear-to-r from-pink-200 to-violet-600 text-transparent bg-clip-text font-semibold">
+      {/* Navbar */}
+      <nav
+        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] sm:w-[80%] lg:w-[60%] rounded-2xl border transition-all duration-500
+          ${
+            scrolled
+              ? "backdrop-blur-xl bg-black/30 border-white/10 shadow-lg"
+              : "backdrop-blur-md bg-black/20 border-white/10 shadow-sm"
+          }`}
+      >
+        <div className="flex items-center justify-between px-5 py-3 sm:py-4">
+          {/* Logo */}
+          <div
+            onClick={scrollToTop}
+            className="flex items-center cursor-pointer select-none group"
+          >
+            <h1 className="font-mono text-lg sm:text-xl text-white/80 group-hover:text-white transition-all duration-300 flex items-center gap-1">
+              <span className="text-green-400 group-hover:text-green-300 transition-colors duration-300">$</span>
+
+              <span className="relative">
+                <span className="bg-linear-to-r from-pink-300 via-fuchsia-400 to-violet-500 text-transparent bg-clip-text font-semibold transition-all duration-300 group-hover:brightness-125 group-hover:scale-[1.02] inline-block">
                   devSuvesh
-                </h1>
-                <h1 className="ml-2 text-white/70">/</h1>
-                <MdChevronRight className="text-white/70" />
-              </div>
-              <div className="flex items-center justify-between gap-5 text-2xl">
-                <FaLinkedinIn
-                  onClick={() => handleIconClick("https://www.linkedin.com/in/suvesh-pandey/")}
-                  className="cursor-pointer hover:text-blue-400 transition-all duration-300 text-white/80 hover:scale-110"
-                />
-                <FaGithub
-                  onClick={() => handleIconClick("https://github.com/suveshpandey")}
-                  className="cursor-pointer hover:text-gray-300 transition-all duration-300 text-white/80 hover:scale-110"
-                />
-                <FaXTwitter
-                  onClick={() => handleIconClick("https://x.com/suvesh_298")}
-                  className="cursor-pointer hover:text-white transition-all duration-300 text-white/80 hover:scale-110"
-                />
-              </div>
+                </span>
+
+                {/* Blinking underscore */}
+                <span className="absolute -right-3 text-fuchsia-500 animate-pulse">
+                  _
+                </span>
+              </span>
+            </h1>
+          </div>
+
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex gap-8 text-sm text-white/80 font-medium">
+            {navItems.map((id) => (
+              <button
+                key={id}
+                onClick={() => scrollToSection(id)}
+                className="hover:text-white relative after:absolute after:left-0 after:-bottom-1 after:w-0 hover:after:w-full after:h-0.5 after:bg-linear-to-r from-pink-400 to-violet-500 after:transition-all after:duration-300 capitalize cursor-pointer"
+              >
+                {id}
+              </button>
+            ))}
+          </div>
+
+          {/* Social Icons */}
+          <div className="hidden sm:flex gap-3">
+            {socials.map(({ icon, url }, i) => (
+              <span
+                key={i}
+                onClick={() => window.open(url, "_blank")}
+                className="group relative p-px rounded-full bg-linear-to-tr from-pink-500/60 to-violet-600/60 hover:from-pink-400 hover:to-violet-500 transition-all duration-300 cursor-pointer"
+              >
+                <div className="flex items-center justify-center bg-black/80 backdrop-blur-md rounded-full w-9 h-9 group-hover:bg-black/60">
+                  <span className="text-white/80 text-lg group-hover:scale-110 group-hover:text-white transition-transform duration-300">
+                    {icon}
+                  </span>
+                </div>
+              </span>
+            ))}
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="lg:hidden text-white/80 hover:text-white transition-colors"
+          >
+            {menuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+          </button>
+        </div>
+
+        {/* Mobile Dropdown */}
+        {menuOpen && (
+          <div className="lg:hidden animate-slideDown flex flex-col items-center gap-5 py-6 bg-black/70 border-t border-white/10 text-white/90 text-sm rounded-b-2xl backdrop-blur-sm">
+            {navItems.map((id) => (
+              <button
+                key={id}
+                onClick={() => scrollToSection(id)}
+                className="capitalize hover:text-white tracking-wide"
+              >
+                {id}
+              </button>
+            ))}
+            <div className="flex gap-5 mt-2">
+              {socials.map(({ icon, url }, i) => (
+                <span
+                  key={i}
+                  onClick={() => window.open(url, "_blank")}
+                  className="group relative p-px rounded-full bg-linear-to-tr from-pink-500/50 to-violet-500/50 hover:from-pink-400 hover:to-violet-400 transition-all duration-300 cursor-pointer"
+                >
+                  <div className="flex items-center justify-center bg-black/70 rounded-full w-9 h-9 group-hover:bg-black/50">
+                    <span className="text-white/80 text-lg group-hover:scale-110 group-hover:text-white transition-transform duration-300">
+                      {icon}
+                    </span>
+                  </div>
+                </span>
+              ))}
             </div>
           </div>
-        </div>
+        )}
       </nav>
 
-      {/* Back to Top Button */}
+      {/* Back to Top */}
       <button
         onClick={scrollToTop}
-        className="fixed z-50 bottom-6 sm:bottom-15 right-6 sm:right-15 p-0.5 rounded-full bg-linear-to-r from-pink-400 to-violet-600 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group cursor-pointer"
-        aria-label="Back to top"
+        className="fixed z-40 bottom-6 right-6 sm:bottom-10 sm:right-10 p-0.5 rounded-full bg-linear-to-r from-pink-500 to-violet-600 shadow-md hover:shadow-lg transition-all hover:scale-110 group"
       >
-        <div className="backdrop-blur-lg bg-slate-900/90 rounded-full p-3 group-hover:bg-slate-900/80 transition-all duration-300">
-          <FaArrowUp className="text-white text-xl group-hover:scale-110 transition-transform duration-300" />
+        <div className="backdrop-blur-md bg-slate-900/90 rounded-full p-3 group-hover:bg-slate-900/80 transition-all">
+          <FaArrowUp className="text-white text-xl group-hover:scale-110 transition-transform" />
         </div>
       </button>
+
+      {/* Slide Animation */}
+      <style jsx>{`
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-slideDown {
+          animation: slideDown 0.25s ease-out;
+        }
+      `}</style>
     </>
   );
 }

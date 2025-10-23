@@ -3,7 +3,7 @@ export const PROJECTS = [
     title: "CodePilot – AI-Assisted Code Learning Platform",
     image: "/images/projectsImg/code-pilot.png",
     description:
-      "CodePilot is an AI-assisted code learning platform built with Next.js, TypeScript, Tailwind CSS, and PostgreSQL. It provides a seamless environment where users can write and run code in multiple languages while receiving real-time AI-powered hints, one-click code fixes, debugging support, and chatbot assistance for better concept clarity. Alongside the code editor, the platform features personal notes, blogs, and an AI-powered quiz for interactive learning. It also integrates YouTube videos with infinite scrolling and caching for smooth performance. With secure authentication via email OTP and Google OAuth, CodePilot offers an engaging, efficient, and accessible way for students and beginners to learn and practice coding.",
+      "CodePilot is an AI-assisted coding platform built with Next.js, TypeScript, Tailwind CSS, and PostgreSQL. It offers a multi-language code editor with real-time AI hints, one-click fixes, debugging, and a concept-clarifying chatbot. The platform also includes interactive quizzes, personal notes, blogs, and cached YouTube videos for learning. Secure login is provided via email OTP and Google OAuth, making it an accessible and efficient tool for coding beginners.",
     technologies: [
       "Next.js",
       "TypeScript",
@@ -77,6 +77,10 @@ export const PROJECTS = [
 ];
 
 export const CONTACT = {
-  phoneNo: "72248-99871 ",
-  email: "jpsuvesh29@gmail.com",
+  phoneNo: "7224899871",
+  email: "suveshpandey29@gmail.com",
+  location: "Madhya Pradesh, India",
+  linkedin: "https://linkedin.com/in/suvesh-pandey",
+  github: "https://github.com/suveshpandey",
+  twitter: "https://twitter.com/suvesh_298"
 };
