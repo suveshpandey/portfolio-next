@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 import Robot from "./Robot";
+import { HardDriveDownload } from "lucide-react";
 
 const container = (delay: number) => ({
   hidden: { x: -80, opacity: 0 },
@@ -10,8 +11,8 @@ const container = (delay: number) => ({
 
 const downloadResume = () => {
   const link = document.createElement("a");
-  link.href = "/suvesh_pandey_resume.pdf";
-  link.download = "Suvesh_Pandey_Resume";
+  link.href = "/suvesh_resume.pdf";
+  link.download = "Suvesh_resume";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -28,7 +29,7 @@ export default function HeroSection() {
               <motion.h1 variants={container(0)} initial="hidden" animate="visible" className="w-full text-4xl sm:text-5xl font-medium tracking-tight text-slate-300">
                 Suvesh Pandey
               </motion.h1>
-              <motion.h1 variants={container(0.5)} initial="hidden" animate="visible" className="text-xl sm:text-2xl bg-gradient-to-r from-pink-300 via-slate-500 to-purple-500 bg-clip-text tracking-tight text-transparent">
+              <motion.h1 variants={container(0.5)} initial="hidden" animate="visible" className="text-xl sm:text-2xl bg-linear-to-r from-pink-300 via-slate-500 to-purple-500 bg-clip-text tracking-tight text-transparent">
                 Full Stack Developer
               </motion.h1>
             </div>
@@ -45,7 +46,7 @@ export default function HeroSection() {
 
             <div className="w-full mt-6 flex items-center justify-center">
               <motion.button variants={container(0.4)} initial="hidden" animate="visible" onClick={downloadResume} className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl font-medium shadow-lg transition-transform transform hover:scale-105 ease-linear cursor-pointer duration-200" style={{ background: "linear-gradient(90deg,#0ea5e9,#7c3aed)", color: "white" }}>
-                Download Resume
+                <HardDriveDownload className="animate-caret-blink repeat-infinite" /> Download Resume
               </motion.button>
             </div>
           </div>

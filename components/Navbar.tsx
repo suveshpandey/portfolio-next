@@ -134,7 +134,7 @@ export default function Navbar() {
       {/* Back to Top */}
       <button
         onClick={scrollToTop}
-        className="fixed z-40 bottom-6 right-6 sm:bottom-10 sm:right-10 p-0.5 rounded-full bg-linear-to-r from-pink-500 to-violet-600 shadow-md hover:shadow-lg transition-all hover:scale-110 group"
+        className="fixed z-40 bottom-6 right-6 sm:bottom-10 sm:right-10 p-0.5 rounded-full bg-linear-to-r from-pink-500 to-violet-600 shadow-md hover:shadow-lg transition-all hover:scale-110 group cursor-pointer"
       >
         <div className="backdrop-blur-md bg-slate-900/90 rounded-full p-3 group-hover:bg-slate-900/80 transition-all">
           <FaArrowUp className="text-white text-xl group-hover:scale-110 transition-transform" />

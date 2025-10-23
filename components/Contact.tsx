@@ -144,7 +144,7 @@ export default function Contact() {
               <Twitter className="text-sky-400 w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-gray-400 text-sm">Twitter</p>
+              <p className="text-gray-400 text-sm">Twitter ( X )</p>
               <p className="text-gray-300 text-sm sm:text-lg font-medium group-hover:text-sky-400 transition-colors">
                 Follow for updates
               </p>
