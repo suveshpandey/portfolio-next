@@ -11,7 +11,7 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="min-h-screen h-auto sm:pt-0 pt-40 py-10">
+    <section id="projects" className="min-h-screen h-auto flex flex-col justify-center items-center sm:pt-0 pt-40 pb-20">
       <motion.div
         whileInView={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -50 }}
@@ -37,11 +37,19 @@ export default function Projects() {
         </motion.p>
       </motion.div>
 
-      <div className="w-full">
-        <Carousel className="w-full">
-          <CarouselContent className="py-4">
+      <div className="w-full relative">
+        <Carousel 
+          className="w-full" 
+          opts={{
+            align: "start",
+            loop: true,
+            duration: 25,
+            dragFree: false,
+          }}
+        >
+          <CarouselContent className="py-4 -ml-2 md:-ml-4">
             {PROJECTS.map((project, index) => (
-              <CarouselItem key={index} className="sm:basis-4/5 md:basis-2/3 lg:basis-2/3">
+              <CarouselItem key={index} className="pl-2 md:pl-4 sm:basis-4/5 md:basis-2/3 lg:basis-2/3">
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
@@ -118,8 +126,8 @@ export default function Projects() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="left-2 sm:left-4 bg-slate-700/80 hover:bg-slate-600 border border-slate-600 size-8 sm:size-10" />
-          <CarouselNext className="right-2 sm:right-4 bg-slate-700/80 hover:bg-slate-600 border border-slate-600 size-8 sm:size-10" />
+          <CarouselPrevious className="left-2 sm:left-4 md:-left-12 lg:-left-14 bg-gradient-to-r from-indigo-600/95 to-purple-600/95 hover:from-indigo-500 hover:to-purple-500 border-2 border-indigo-400/60 hover:border-indigo-300/80 text-white size-10 sm:size-12 md:size-14 shadow-xl hover:shadow-2xl backdrop-blur-md transition-all duration-300 hover:scale-110 z-20 opacity-90 hover:opacity-100" />
+          <CarouselNext className="right-2 sm:right-4 md:-right-12 lg:-right-14 bg-gradient-to-r from-indigo-600/95 to-purple-600/95 hover:from-indigo-500 hover:to-purple-500 border-2 border-indigo-400/60 hover:border-indigo-300/80 text-white size-10 sm:size-12 md:size-14 shadow-xl hover:shadow-2xl backdrop-blur-md transition-all duration-300 hover:scale-110 z-20 opacity-90 hover:opacity-100" />
         </Carousel>
       </div>
     </section>

@@ -12,7 +12,7 @@ import { FaCodeCompare } from "react-icons/fa6";
 
 export default function Technologies() {
   return (
-    <div id="technologies" className="min-h-screen text-white flex items-center justify-center overflow-hidden sm:pt-0 pt-40">
+    <div id="technologies" className="min-h-screen text-white flex items-center justify-center overflow-hidden sm:pt-0 pt-40 pb-20">
       <div className="w-full">
         <motion.div
           whileInView={{ opacity: 1, y: 0 }}

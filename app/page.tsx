@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import Technologies from "@/components/Technologies";
 import AboutSection from "@/components/AboutSection";
+import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import CodingProfiles from "@/components/CodingProfiles";
 import Contact from "@/components/Contact";
@@ -13,10 +14,11 @@ export default function Home() {
         <div className="absolute top-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
       </div>
 
-      <div className="relative w-full sm:w-[80%] lg:w-[60%] mx-auto px-4 sm:px-0">
+      <div className="relative w-full sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] 2xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <Navbar />
         <HeroSection />
         <AboutSection />
+        <Experience />
         <Technologies />
         <Projects />
         <CodingProfiles />

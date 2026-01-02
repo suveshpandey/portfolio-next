@@ -7,7 +7,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const navItems = ["about", "projects", "technologies", "contact"];
+  const navItems = ["about", "experience", "projects", "technologies", "contact"];
   const socials = [
     { icon: <FaLinkedinIn />, url: "https://www.linkedin.com/in/suvesh-pandey/" },
     { icon: <FaGithub />, url: "https://github.com/suveshpandey" },
@@ -32,11 +32,11 @@ export default function Navbar() {
     <>
       {/* Navbar */}
       <nav
-        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] sm:w-[80%] lg:w-[60%] rounded-2xl border transition-all duration-500
+        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] 2xl:max-w-[1400px] rounded-2xl border border-neutral-800 backdrop-blur-sm bg-neutral-900/40 transition-all duration-500
           ${
             scrolled
-              ? "backdrop-blur-xl bg-black/30 border-white/10 shadow-lg"
-              : "backdrop-blur-md bg-black/20 border-white/10 shadow-sm"
+              ? "shadow-lg hover:border-blue-500/30"
+              : "shadow-sm"
           }`}
       >
         <div className="flex items-center justify-between px-5 py-3 sm:py-4">
@@ -49,12 +49,12 @@ export default function Navbar() {
               <span className="text-green-400 group-hover:text-green-300 transition-colors duration-300">$</span>
 
               <span className="relative">
-                <span className="bg-linear-to-r from-pink-300 via-fuchsia-400 to-violet-500 text-transparent bg-clip-text font-semibold transition-all duration-300 group-hover:brightness-125 group-hover:scale-[1.02] inline-block">
+                <span className="bg-linear-to-r from-blue-500 to-green-500 text-transparent bg-clip-text font-semibold transition-all duration-300 group-hover:brightness-125 group-hover:scale-[1.02] inline-block">
                   devSuvesh
                 </span>
 
                 {/* Blinking underscore */}
-                <span className="absolute -right-3 text-fuchsia-500 animate-pulse">
+                <span className="absolute -right-3 text-green-400 animate-pulse">
                   _
                 </span>
               </span>
@@ -67,7 +67,7 @@ export default function Navbar() {
               <button
                 key={id}
                 onClick={() => scrollToSection(id)}
-                className="hover:text-white relative after:absolute after:left-0 after:-bottom-1 after:w-0 hover:after:w-full after:h-0.5 after:bg-linear-to-r from-pink-400 to-violet-500 after:transition-all after:duration-300 capitalize cursor-pointer"
+                className="hover:text-white relative after:absolute after:left-0 after:-bottom-1 after:w-0 hover:after:w-full after:h-0.5 after:bg-linear-to-r after:from-blue-500 after:to-green-500 after:transition-all after:duration-300 capitalize cursor-pointer"
               >
                 {id}
               </button>
@@ -80,9 +80,9 @@ export default function Navbar() {
               <span
                 key={i}
                 onClick={() => window.open(url, "_blank")}
-                className="group relative p-px rounded-full bg-linear-to-tr from-pink-500/60 to-violet-600/60 hover:from-pink-400 hover:to-violet-500 transition-all duration-300 cursor-pointer"
+                className="group relative p-px rounded-full bg-linear-to-tr from-blue-500/60 to-green-500/60 hover:from-blue-400 hover:to-green-400 transition-all duration-300 cursor-pointer"
               >
-                <div className="flex items-center justify-center bg-black/80 backdrop-blur-md rounded-full w-9 h-9 group-hover:bg-black/60">
+                <div className="flex items-center justify-center bg-neutral-800/60 backdrop-blur-sm rounded-full w-9 h-9 group-hover:bg-neutral-700/60 border border-neutral-700/50 group-hover:border-blue-500/30 transition-all">
                   <span className="text-white/80 text-lg group-hover:scale-110 group-hover:text-white transition-transform duration-300">
                     {icon}
                   </span>
@@ -102,7 +102,7 @@ export default function Navbar() {
 
         {/* Mobile Dropdown */}
         {menuOpen && (
-          <div className="lg:hidden animate-slideDown flex flex-col items-center gap-5 py-6 bg-black/70 border-t border-white/10 text-white/90 text-sm rounded-b-2xl backdrop-blur-sm">
+          <div className="lg:hidden animate-slideDown flex flex-col items-center gap-5 py-6 bg-neutral-900/40 border-t border-neutral-800 text-white/90 text-sm rounded-b-2xl backdrop-blur-sm">
             {navItems.map((id) => (
               <button
                 key={id}
@@ -117,9 +117,9 @@ export default function Navbar() {
                 <span
                   key={i}
                   onClick={() => window.open(url, "_blank")}
-                  className="group relative p-px rounded-full bg-linear-to-tr from-pink-500/50 to-violet-500/50 hover:from-pink-400 hover:to-violet-400 transition-all duration-300 cursor-pointer"
+                  className="group relative p-px rounded-full bg-linear-to-tr from-blue-500/50 to-green-500/50 hover:from-blue-400 hover:to-green-400 transition-all duration-300 cursor-pointer"
                 >
-                  <div className="flex items-center justify-center bg-black/70 rounded-full w-9 h-9 group-hover:bg-black/50">
+                  <div className="flex items-center justify-center bg-neutral-800/60 backdrop-blur-sm rounded-full w-9 h-9 group-hover:bg-neutral-700/60 border border-neutral-700/50 group-hover:border-blue-500/30 transition-all">
                     <span className="text-white/80 text-lg group-hover:scale-110 group-hover:text-white transition-transform duration-300">
                       {icon}
                     </span>
@@ -134,9 +134,9 @@ export default function Navbar() {
       {/* Back to Top */}
       <button
         onClick={scrollToTop}
-        className="fixed z-40 bottom-6 right-6 sm:bottom-10 sm:right-10 p-0.5 rounded-full bg-linear-to-r from-pink-500 to-violet-600 shadow-md hover:shadow-lg transition-all hover:scale-110 group cursor-pointer"
+        className="fixed z-40 bottom-6 right-6 sm:bottom-10 sm:right-10 p-0.5 rounded-full bg-gradient-to-r from-blue-500/90 to-green-500/90 hover:from-blue-400 hover:to-green-400 border-2 border-blue-400/60 hover:border-green-400/80 shadow-lg hover:shadow-xl hover:shadow-green-500/20 transition-all hover:scale-110 group cursor-pointer backdrop-blur-sm"
       >
-        <div className="backdrop-blur-md bg-slate-900/90 rounded-full p-3 group-hover:bg-slate-900/80 transition-all">
+        <div className="bg-neutral-900/40 backdrop-blur-sm rounded-full p-3 group-hover:bg-neutral-800/40 transition-all">
           <FaArrowUp className="text-white text-xl group-hover:scale-110 transition-transform" />
         </div>
       </button>

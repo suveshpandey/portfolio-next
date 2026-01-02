@@ -19,7 +19,7 @@ export default function Contact() {
   };
 
   return (
-    <div id="contact" className="min-h-screen py-16 flex flex-col items-center justify-center px-4 sm:px-6">
+    <div id="contact" className="min-h-screen flex flex-col items-center justify-center sm:pt-0 pt-40 pb-20 px-4 sm:px-6">
       <motion.div
         whileInView={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -50 }}
@@ -47,7 +47,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 40 }}
           transition={{ duration: 1 }}
-          className="grid md:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto"
+          className="grid md:grid-cols-2 gap-4 sm:gap-6 max-w-5xl mx-auto"
         >
           {/* Phone - Copy to Clipboard */}
           <div 
@@ -218,7 +218,7 @@ export default function Contact() {
           </div>
           <div className="flex-col gap-y-2 items-center justify-center">
             <p className="text-sm text-center">Crafted with passion</p>
-            <p className="text-sm text-center">© 2025 • Suvesh Pandey</p>
+            <p className="text-sm text-center">© 2026 • Suvesh Pandey</p>
           </div>
           <div className="flex gap-1">
             <div className="w-1 h-1 bg-purple-400 rounded-full animate-pulse" style={{ animationDelay: '0.6s' }}></div>

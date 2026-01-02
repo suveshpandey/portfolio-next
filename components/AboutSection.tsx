@@ -33,13 +33,13 @@ export default function AboutSection() {
       title: "Cloud & DevOps",
       subtitle: "Expanding Technical Stack",
       place: "Currently Learning",
-      detail: "AWS • Docker • Kubernetes • CI/CD Pipelines • Infrastructure as Code",
+      detail: "AWS • Docker • CI/CD Pipelines • Infrastructure as Code",
       color: "border-orange-500/30 hover:border-orange-400/50",
     },
   ];
 
   return (
-    <motion.div id="about" className="min-h-screen flex flex-col justify-center items-center sm:pt-0 pt-40">
+    <motion.div id="about" className="min-h-screen flex flex-col justify-center items-center sm:pt-0 pt-40 pb-20">
       <div className="w-full">
         <motion.div
           whileInView={{ opacity: 1, y: 0 }}
