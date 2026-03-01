@@ -118,7 +118,7 @@ export default function HeroSection() {
           variants={container(0.3)}
           initial="hidden"
           animate="visible"
-          className="flex flex-wrap items-center gap-4"
+          className="flex flex-col lg:flex-row flex-wrap items-center justify-center lg:justify-start gap-4"
         >
           <button
             onClick={downloadResume}

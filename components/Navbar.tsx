@@ -30,9 +30,15 @@ export default function Navbar() {
   }, []);
 
   const scrollToSection = (id: string) => {
-    const section = document.getElementById(id);
-    if (section) section.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const section = document.getElementById(id);
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
   };
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
