@@ -19,7 +19,7 @@ export default function Contact() {
   };
 
   return (
-    <div id="contact" className="section-wrapper w-full pt-24 sm:pt-32 pb-24 px-4 sm:px-6">
+    <div id="contact" className="section-wrapper w-full pt-24 sm:pt-32 pb-24">
       <motion.div
         whileInView={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: 24 }}

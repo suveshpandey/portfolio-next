@@ -44,7 +44,7 @@ export default function CodingProfiles() {
         initial={{ opacity: 0, y: 40 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 1 }}
-        className="w-full max-w-5xl mb-8 px-4 sm:px-0"
+        className="w-full max-w-5xl mb-8"
       >
         <div className="bg-muted p-6 rounded-xl flex flex-col gap-6 border border-border hover:border-accent/40 backdrop-blur-sm transition-all duration-200">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -102,7 +102,7 @@ export default function CodingProfiles() {
         initial={{ opacity: 0, y: 40 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 1, delay: 0.3 }}
-        className="w-full max-w-5xl px-4 sm:px-0"
+        className="w-full max-w-5xl"
       >
         <div className="bg-muted p-6 rounded-xl flex flex-col gap-6 border border-border hover:border-accent/40 backdrop-blur-sm transition-all duration-200">
           <a
