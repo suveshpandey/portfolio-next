@@ -1,8 +1,70 @@
 "use client";
+
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { HardDriveDownload, ArrowDown } from "lucide-react";
 import HeroImageFrame from "./HeroImageFrame";
+
+const ROLES = ["ASSOCIATE SOFTWARE ENGINEER", "CLOUD PRACTITIONER", "FULL STACK DEVELOPER"];
+
+function TypewriterRoles() {
+  const [index, setIndex] = useState(0);
+  const [text, setText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const advanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const role = ROLES[index];
+    const typeSpeed = isDeleting ? 35 : 70;
+    const pauseAtEnd = 2400;
+    const pauseBetween = 700;
+
+    if (!isDeleting && text === role) {
+      const t = setTimeout(() => setIsDeleting(true), pauseAtEnd);
+      return () => clearTimeout(t);
+    }
+
+    if (isDeleting && text === "") {
+      setIsDeleting(false);
+      if (advanceTimeoutRef.current) clearTimeout(advanceTimeoutRef.current);
+      advanceTimeoutRef.current = setTimeout(() => {
+        advanceTimeoutRef.current = null;
+        setIndex((i) => (i + 1) % ROLES.length);
+      }, pauseBetween);
+      return () => {};
+    }
+
+    const delay = isDeleting ? typeSpeed : text.length === 0 ? 400 : typeSpeed;
+    const t = setTimeout(
+      () => {
+        setText((prev) =>
+          isDeleting ? role.slice(0, prev.length - 1) : role.slice(0, prev.length + 1)
+        );
+      },
+      delay
+    );
+    return () => clearTimeout(t);
+  }, [index, text, isDeleting]);
+
+  useEffect(() => {
+    return () => {
+      if (advanceTimeoutRef.current) clearTimeout(advanceTimeoutRef.current);
+    };
+  }, []);
+
+  return (
+    <span className="inline-flex items-baseline min-h-[1.5em]">
+      <span>{text}</span>
+      <motion.span
+        animate={{ opacity: [1, 0] }}
+        transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
+        className="inline-block w-[2px] h-4 sm:h-5 bg-accent ml-0.5 align-middle"
+        aria-hidden
+      />
+    </span>
+  );
+}
 
 const container = (delay: number) => ({
   hidden: { y: 24, opacity: 0 },
@@ -27,32 +89,24 @@ export default function HeroSection() {
     <section className="w-full min-h-[100vh] flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 overflow-hidden pt-32 sm:pt-36 pb-20 lg:pb-28 px-0">
       {/* Left: intro + name + CTA */}
       <div className="w-full lg:max-w-[52%] lg:min-w-0 flex flex-col items-center lg:items-start text-center lg:text-left order-2 lg:order-1">
-        <motion.span
+        <motion.h1
           variants={container(0)}
           initial="hidden"
           animate="visible"
-          className="text-accent font-semibold text-sm tracking-[0.2em] uppercase mb-4"
-        >
-          Software Engineer
-        </motion.span>
-        <motion.h1
-          variants={container(0.08)}
-          initial="hidden"
-          animate="visible"
-          className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.08] mb-3"
+          className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.08] mb-2"
         >
           Suvesh Pandey
         </motion.h1>
-        <motion.p
-          variants={container(0.16)}
+        <motion.div
+          variants={container(0.05)}
           initial="hidden"
           animate="visible"
-          className="text-lg sm:text-xl text-muted-foreground font-medium mb-6"
+          className="text-accent font-semibold text-sm tracking-[0.2em] uppercase mb-6 min-h-[1.5em] flex justify-center lg:justify-start w-full"
         >
-          Full Stack Developer
-        </motion.p>
+          <TypewriterRoles />
+        </motion.div>
         <motion.p
-          variants={container(0.2)}
+          variants={container(0.16)}
           initial="hidden"
           animate="visible"
           className="text-muted-foreground text-base sm:text-lg leading-relaxed max-w-xl mb-8"
