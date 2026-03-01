@@ -19,6 +19,8 @@
   --muted-foreground: oklch(0.554 0.046 257.417);
   --accent: oklch(0.968 0.007 247.896);
   --accent-foreground: oklch(0.208 0.042 265.755);
+  --accent-muted: oklch(0.72 0.11 195 / 0.1);
+  --accent-border: oklch(0.72 0.11 195 / 0.35);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.929 0.013 255.508);
   --input: oklch(0.929 0.013 255.508);
@@ -44,6 +46,8 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-accent-muted: var(--accent-muted);
+  --color-accent-border: var(--accent-border);
   --color-destructive: var(--destructive);
   --color-border: var(--border);
   --color-input: var(--input);
@@ -51,15 +55,20 @@
 }
 
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
+  --background: oklch(0.09 0.01 260);
+  --foreground: oklch(0.97 0.005 260);
+  --primary: oklch(0.22 0.02 260);
+  --primary-foreground: oklch(0.97 0.005 260);
+  --muted: oklch(0.15 0.015 260);
+  --muted-foreground: oklch(0.58 0.02 260);
+  --border: oklch(0.22 0.02 260);
+  --input: oklch(0.22 0.02 260);
+  --ring: oklch(0.5 0.05 260);
+  /* Refined accent - soft teal for a professional, modern developer look */
+  --accent: oklch(0.72 0.11 195);
+  --accent-foreground: oklch(0.12 0.02 195);
+  --accent-muted: oklch(0.72 0.11 195 / 0.12);
+  --accent-border: oklch(0.72 0.11 195 / 0.4);
 }
 
 @layer base {
@@ -71,14 +80,157 @@
   }
 }
 
-/* Custom scrollbar */
+/* Section layout - identical sizing, improved hierarchy */
+.section-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding-top: 6rem;
+  padding-bottom: 5rem;
+}
+@media (min-width: 640px) {
+  .section-wrapper { padding-top: 8rem; }
+}
+@media (min-width: 1024px) {
+  .section-wrapper { align-items: flex-start; }
+}
+
+/* Section heading block - stands out, left-aligned on desktop */
+.section-heading {
+  width: 100%;
+  max-width: 48rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin-bottom: 3.5rem;
+}
+@media (min-width: 1024px) {
+  .section-heading { margin-bottom: 4rem; }
+}
+.section-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--accent);
+  padding: 0;
+}
+@media (min-width: 640px) {
+  .section-title { font-size: 2.75rem; }
+}
+.section-divider {
+  width: 3rem;
+  height: 3px;
+  margin-left: 0;
+  margin-right: auto;
+  border-radius: 9999px;
+  background: var(--accent);
+  transform-origin: left center;
+}
+.section-subtitle {
+  color: var(--muted-foreground);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  font-weight: 400;
+  text-align: left;
+  max-width: 36rem;
+}
+.section-card {
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.section-card:hover {
+  border-color: var(--accent-border);
+  box-shadow: 0 4px 24px -4px oklch(0.72 0.11 195 / 0.08);
+}
+
+/* Custom scrollbar - matches theme */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 10px; }
-::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #666; }
+::-webkit-scrollbar-track { background: oklch(0.12 0.01 260); border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: oklch(0.35 0.03 260); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
 /* Typewriter used in old hero */
 .line-1 { border-right: 2px solid rgba(255,255,255,.75); white-space: nowrap; overflow: hidden; }
 .anim-typewriter { animation: typewriter 4s steps(44) 1s 1 normal both, blinkTextCursor 500ms steps(44) infinite normal; }
 @keyframes typewriter { from { width: 0; } to { width: 9em; } }
 @keyframes blinkTextCursor { from { border-right-color: rgba(255,255,255,.75); } to { border-right-color: transparent; } }
+
+/* Animated light running along border - light moves, leaves glow behind */
+@keyframes border-light-spin {
+  to { transform: rotate(360deg); }
+}
+.border-light-run {
+  position: relative;
+  padding: 2px;
+  border-radius: inherit;
+}
+.border-light-run::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg 50deg,
+    oklch(0.72 0.11 195 / 0.2) 50deg 90deg,
+    var(--accent) 90deg 130deg,
+    oklch(0.72 0.11 195 / 0.35) 130deg 180deg,
+    transparent 180deg 360deg
+  );
+  animation: border-light-spin 5s linear infinite;
+  z-index: 0;
+}
+.border-light-run > * {
+  position: relative;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+/* Horizontal line with moving light – smooth, professional */
+.line-glow-run {
+  position: relative;
+  min-height: 2px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    oklch(0.72 0.11 195 / 0.12) 20%,
+    oklch(0.72 0.11 195 / 0.35) 40%,
+    var(--accent) 50%,
+    oklch(0.72 0.11 195 / 0.35) 60%,
+    oklch(0.72 0.11 195 / 0.12) 80%,
+    transparent 100%
+  );
+  background-size: 250% 100%;
+  animation: line-glow-move 3.5s ease-in-out infinite;
+  border-radius: 2px;
+  will-change: background-position;
+}
+@keyframes line-glow-move {
+  0%, 100% { background-position: 250% 0; }
+  50% { background-position: -50% 0; }
+}
+
+/* Traveling light along SVG path (hero image border + extending line) */
+.hero-light-path {
+  animation: hero-light-travel 3s linear infinite;
+}
+.hero-light-trail {
+  --hero-trail-offset: 100;
+  animation: hero-light-trail-travel 3s linear infinite;
+}
+/* Keyframes use component-injected values via --hero-path-length and --hero-trail-offset */
+@keyframes hero-light-travel {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: calc(-1 * var(--hero-path-length, 400)); }
+}
+@keyframes hero-light-trail-travel {
+  0% { stroke-dashoffset: var(--hero-trail-offset, 100); }
+  100% { stroke-dashoffset: calc(-1 * var(--hero-path-length, 400) + var(--hero-trail-offset, 100)); }
+}

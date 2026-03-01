@@ -1,12 +1,12 @@
 "use client";
 import Image from "next/image";
 import { motion } from "motion/react";
-import Robot from "./Robot";
-import { HardDriveDownload } from "lucide-react";
+import { HardDriveDownload, ArrowDown } from "lucide-react";
+import HeroImageFrame from "./HeroImageFrame";
 
 const container = (delay: number) => ({
-  hidden: { x: -80, opacity: 0 },
-  visible: { x: 0, opacity: 1, transition: { duration: 0.9, delay } },
+  hidden: { y: 24, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.6, delay } },
 });
 
 const downloadResume = () => {
@@ -18,45 +18,97 @@ const downloadResume = () => {
   document.body.removeChild(link);
 };
 
+const scrollToAbout = () => {
+  document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+};
+
 export default function HeroSection() {
   return (
-    <section className="w-full min-h-screen h-auto flex flex-col md:flex-row items-center justify-between overflow-hidden pt-28 sm:pt-0 pb-20">
-      <div className="w-full sm:w-[55%] md:w-[50%] lg:w-[48%] h-auto flex flex-col items-center">
-        <div className="w-full flex flex-col gap-y-6">
-          <div className="w-full flex flex-col sm:flex-row gap-x-10 gap-y-4 items-center sm:justify-start justify-center">
-            <Image src="/images/profilePic.jpg" alt="profile" width={128} height={128} className="w-30 h-30 sm:w-35 sm:h-35 rounded-full ring-2 ring-neutral-800 object-cover shadow-lg" />
-            <div className="flex flex-col gap-y-2 justify-center sm:items-start items-center">
-              <motion.h1 variants={container(0)} initial="hidden" animate="visible" className="w-full text-4xl sm:text-5xl font-medium tracking-tight text-slate-300">
-                Suvesh Pandey
-              </motion.h1>
-              <motion.h1 variants={container(0.5)} initial="hidden" animate="visible" className="text-xl sm:text-2xl bg-linear-to-r from-blue-500 to-green-500 bg-clip-text tracking-tight text-transparent">
-                Full Stack Developer
-              </motion.h1>
-            </div>
-          </div>
-
-          <div className="w-full flex flex-col gap-4 items-center sm:items-start">
-            <motion.p variants={container(0.2)} initial="hidden" animate="visible" className="mt-3 text-gray-400 text-center sm:text-left">
-              I am a <span className="text-blue-400/80 font-medium">fullstack developer</span> passionate about building <span className="text-blue-300/70 font-medium">scalable web applications</span> and <span className="text-green-400/80 font-medium">cloud solutions</span>. With expertise in the <span className="text-green-300/70 font-medium">MERN stack</span>, <span className="text-blue-400/80 font-medium">Next.js</span>, <span className="text-blue-300/70 font-medium">TypeScript</span>, and <span className="text-green-400/80 font-medium">AWS cloud services</span>.
-            </motion.p>
-
-            <motion.p variants={container(0.2)} initial="hidden" animate="visible" className="mt-3 text-gray-400 text-center sm:text-left">
-              Currently working as a <span className="text-blue-400/80 font-medium">Web Development Intern</span>, I focus on creating innovative <span className="text-blue-300/70 font-medium">fullstack solutions</span> and leveraging <span className="text-green-400/80 font-medium">AWS cloud infrastructure</span> to build efficient, <span className="text-blue-300/70 font-medium">scalable applications</span>.
-            </motion.p>
-
-            <div className="w-full mt-6 flex items-center justify-center">
-              <motion.button variants={container(0.4)} initial="hidden" animate="visible" onClick={downloadResume} className="inline-flex items-center gap-3 px-6 py-3.5 rounded-2xl font-medium shadow-lg hover:shadow-xl transition-all transform hover:scale-105 ease-linear cursor-pointer duration-300 bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-400 hover:to-green-400 text-white border border-blue-400/30 hover:border-green-400/50">
-                <HardDriveDownload className="animate-caret-blink repeat-infinite" /> Download Resume
-              </motion.button>
-            </div>
-          </div>
-        </div>
+    <section className="w-full min-h-[100vh] flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 overflow-hidden pt-32 sm:pt-36 pb-20 lg:pb-28 px-0">
+      {/* Left: intro + name + CTA */}
+      <div className="w-full lg:max-w-[52%] lg:min-w-0 flex flex-col items-center lg:items-start text-center lg:text-left order-2 lg:order-1">
+        <motion.span
+          variants={container(0)}
+          initial="hidden"
+          animate="visible"
+          className="text-accent font-semibold text-sm tracking-[0.2em] uppercase mb-4"
+        >
+          Software Engineer
+        </motion.span>
+        <motion.h1
+          variants={container(0.08)}
+          initial="hidden"
+          animate="visible"
+          className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.08] mb-3"
+        >
+          Suvesh Pandey
+        </motion.h1>
+        <motion.p
+          variants={container(0.16)}
+          initial="hidden"
+          animate="visible"
+          className="text-lg sm:text-xl text-muted-foreground font-medium mb-6"
+        >
+          Full Stack Developer
+        </motion.p>
+        <motion.p
+          variants={container(0.2)}
+          initial="hidden"
+          animate="visible"
+          className="text-muted-foreground text-base sm:text-lg leading-relaxed max-w-xl mb-8"
+        >
+          I build <span className="text-foreground font-medium">scalable web applications</span> and{" "}
+          <span className="text-accent font-medium">cloud solutions</span> with the MERN stack, Next.js, TypeScript, and AWS. Currently at Euron as Associate Software Engineer.
+        </motion.p>
+        <motion.div
+          variants={container(0.3)}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-wrap items-center gap-4"
+        >
+          <button
+            onClick={downloadResume}
+            className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-lg font-semibold bg-accent text-accent-foreground hover:opacity-90 transition-opacity shadow-lg shadow-accent/20"
+          >
+            <HardDriveDownload className="w-4 h-4" />
+            Download Resume
+          </button>
+          <button
+            onClick={scrollToAbout}
+            className="inline-flex items-center gap-2 text-foreground font-medium hover:text-accent transition-colors"
+          >
+            Learn more
+            <ArrowDown className="w-4 h-4" />
+          </button>
+        </motion.div>
       </div>
 
-      <div className="h-full flex items-center justify-center">
-        <div className="w-80 h-80 lg:w-110 lg:h-110 flex items-center justify-center">
-          <Robot />
-        </div>
+      {/* Right: visual */}
+      <div className="w-full lg:w-auto flex-shrink-0 flex items-center justify-center order-1 lg:order-2 pb-6 pr-6 lg:pb-8 lg:pr-8">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="relative"
+        >
+          <HeroImageFrame>
+            <div className="relative w-full h-full rounded-xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent pointer-events-none z-[1]" />
+              <Image
+                src="/images/profilePic.jpg"
+                alt="Suvesh Pandey"
+                width={320}
+                height={320}
+                className="relative z-10 w-full h-full object-cover"
+                priority
+              />
+            </div>
+          </HeroImageFrame>
+          <div
+            className="absolute -bottom-2 -right-2 w-20 h-20 sm:w-24 sm:h-24 rounded-xl z-0 border border-accent/50 bg-accent/10 shadow-sm shadow-accent/10"
+            aria-hidden
+          />
+        </motion.div>
       </div>
     </section>
   );

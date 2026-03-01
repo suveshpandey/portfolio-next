@@ -78,7 +78,7 @@ export const PROJECTS = [
 
 export const CONTACT = {
   phoneNo: "7224899871",
-  email: "suveshpandey29@gmail.com",
+  email: "jpsuvesh29@gmail.com",
   location: "Madhya Pradesh, India",
   linkedin: "https://linkedin.com/in/suvesh-pandey",
   github: "https://github.com/suveshpandey",

@@ -1,21 +1,30 @@
 "use client";
+
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { FaLinkedinIn, FaGithub, FaArrowUp, FaBars, FaTimes } from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
+
+const navItems = [
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
+  { id: "projects", label: "Projects" },
+  { id: "technologies", label: "Technologies" },
+  { id: "contact", label: "Contact" },
+];
+
+const socials = [
+  { icon: <FaLinkedinIn />, url: "https://www.linkedin.com/in/suvesh-pandey/", label: "LinkedIn" },
+  { icon: <FaGithub />, url: "https://github.com/suveshpandey", label: "GitHub" },
+  { icon: <BsTwitterX />, url: "https://x.com/suvesh_298", label: "X (Twitter)" },
+];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const navItems = ["about", "experience", "projects", "technologies", "contact"];
-  const socials = [
-    { icon: <FaLinkedinIn />, url: "https://www.linkedin.com/in/suvesh-pandey/" },
-    { icon: <FaGithub />, url: "https://github.com/suveshpandey" },
-    { icon: <BsTwitterX />, url: "https://x.com/suvesh_298" },
-  ];
-
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
+    const handleScroll = () => setScrolled(window.scrollY > 16);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -30,133 +39,220 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Navbar */}
-      <nav
-        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] 2xl:max-w-[1400px] rounded-2xl border border-neutral-800 backdrop-blur-sm bg-neutral-900/40 transition-all duration-500
-          ${
-            scrolled
-              ? "shadow-lg hover:border-blue-500/30"
-              : "shadow-sm"
-          }`}
+      <motion.nav
+        initial={{ y: -20, opacity: 0 }}
+        animate={{
+          y: 0,
+          opacity: 1,
+          transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] },
+        }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-background/95 border-b border-border backdrop-blur-md shadow-sm shadow-black/5"
+            : "bg-transparent border-b border-transparent"
+        }`}
       >
-        <div className="flex items-center justify-between px-5 py-3 sm:py-4">
-          {/* Logo */}
-          <div
-            onClick={scrollToTop}
-            className="flex items-center cursor-pointer select-none group"
-          >
-            <h1 className="font-mono text-lg sm:text-xl text-white/80 group-hover:text-white transition-all duration-300 flex items-center gap-1">
-              <span className="text-green-400 group-hover:text-green-300 transition-colors duration-300">$</span>
-
-              <span className="relative">
-                <span className="bg-linear-to-r from-blue-500 to-green-500 text-transparent bg-clip-text font-semibold transition-all duration-300 group-hover:brightness-125 group-hover:scale-[1.02] inline-block">
-                  devSuvesh
-                </span>
-
-                {/* Blinking underscore */}
-                <span className="absolute -right-3 text-green-400 animate-pulse">
-                  _
-                </span>
+        <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            {/* Logo */}
+            <motion.button
+              type="button"
+              onClick={scrollToTop}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="flex items-center gap-1.5 text-foreground hover:text-accent transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md"
+            >
+              <span className="font-mono text-base sm:text-lg font-semibold tracking-tight">
+                <span className="text-accent">$</span>
+                <span className="text-foreground">devSuvesh</span>
               </span>
-            </h1>
-          </div>
+            </motion.button>
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex gap-8 text-sm text-white/80 font-medium">
-            {navItems.map((id) => (
-              <button
-                key={id}
-                onClick={() => scrollToSection(id)}
-                className="hover:text-white relative after:absolute after:left-0 after:-bottom-1 after:w-0 hover:after:w-full after:h-0.5 after:bg-linear-to-r after:from-blue-500 after:to-green-500 after:transition-all after:duration-300 capitalize cursor-pointer"
-              >
-                {id}
-              </button>
-            ))}
-          </div>
+            {/* Desktop Nav */}
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={{
+                visible: {
+                  transition: { staggerChildren: 0.05, delayChildren: 0.1 },
+                },
+                hidden: {},
+              }}
+              className="hidden lg:flex items-center gap-1"
+            >
+              {navItems.map(({ id, label }) => (
+                <motion.button
+                  key={id}
+                  type="button"
+                  onClick={() => scrollToSection(id)}
+                  variants={{
+                    hidden: { opacity: 0, y: -8 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 rounded-md transition-colors duration-200 relative"
+                >
+                  {label}
+                </motion.button>
+              ))}
+            </motion.div>
 
-          {/* Social Icons */}
-          <div className="hidden sm:flex gap-3">
-            {socials.map(({ icon, url }, i) => (
-              <span
-                key={i}
-                onClick={() => window.open(url, "_blank")}
-                className="group relative p-px rounded-full bg-linear-to-tr from-blue-500/60 to-green-500/60 hover:from-blue-400 hover:to-green-400 transition-all duration-300 cursor-pointer"
-              >
-                <div className="flex items-center justify-center bg-neutral-800/60 backdrop-blur-sm rounded-full w-9 h-9 group-hover:bg-neutral-700/60 border border-neutral-700/50 group-hover:border-blue-500/30 transition-all">
-                  <span className="text-white/80 text-lg group-hover:scale-110 group-hover:text-white transition-transform duration-300">
-                    {icon}
-                  </span>
-                </div>
+            {/* Social Icons - Desktop */}
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={{
+                visible: {
+                  transition: { staggerChildren: 0.06, delayChildren: 0.2 },
+                },
+                hidden: {},
+              }}
+              className="hidden sm:flex items-center gap-2"
+            >
+              {socials.map(({ icon, url, label }, i) => (
+                <motion.a
+                  key={i}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.8 },
+                    visible: { opacity: 1, scale: 1 },
+                  }}
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.92 }}
+                  className="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-accent hover:bg-accent/10 border border-transparent hover:border-accent/30 transition-colors duration-200"
+                  aria-label={label}
+                >
+                  {icon}
+                </motion.a>
+              ))}
+            </motion.div>
+
+            {/* Mobile Menu Toggle */}
+            <motion.button
+              type="button"
+              onClick={() => setMenuOpen(!menuOpen)}
+              whileTap={{ scale: 0.92 }}
+              className="lg:hidden relative flex items-center justify-center w-10 h-10 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
+              aria-expanded={menuOpen}
+              aria-label="Toggle menu"
+            >
+              <span className="relative inline-flex w-5 h-5 items-center justify-center">
+                <motion.span
+                  animate={menuOpen ? { rotate: 90, opacity: 0 } : { rotate: 0, opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute inset-0 flex items-center justify-center"
+                >
+                  <FaBars size={20} />
+                </motion.span>
+                <motion.span
+                  initial={false}
+                  animate={menuOpen ? { rotate: 0, opacity: 1 } : { rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute inset-0 flex items-center justify-center"
+                >
+                  <FaTimes size={20} />
+                </motion.span>
               </span>
-            ))}
+            </motion.button>
           </div>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="lg:hidden text-white/80 hover:text-white transition-colors"
-          >
-            {menuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
-          </button>
         </div>
 
-        {/* Mobile Dropdown */}
-        {menuOpen && (
-          <div className="lg:hidden animate-slideDown flex flex-col items-center gap-5 py-6 bg-neutral-900/40 border-t border-neutral-800 text-white/90 text-sm rounded-b-2xl backdrop-blur-sm">
-            {navItems.map((id) => (
-              <button
-                key={id}
-                onClick={() => scrollToSection(id)}
-                className="capitalize hover:text-white tracking-wide"
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{
+                height: "auto",
+                opacity: 1,
+                transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
+              }}
+              exit={{
+                height: 0,
+                opacity: 0,
+                transition: { duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] },
+              }}
+              className="lg:hidden overflow-hidden border-t border-border bg-background/98 backdrop-blur-md"
+            >
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  visible: {
+                    transition: { staggerChildren: 0.04, delayChildren: 0.08 },
+                  },
+                  hidden: {},
+                }}
+                className="mx-auto max-w-[1400px] px-4 py-4 space-y-0.5"
               >
-                {id}
-              </button>
-            ))}
-            <div className="flex gap-5 mt-2">
-              {socials.map(({ icon, url }, i) => (
-                <span
-                  key={i}
-                  onClick={() => window.open(url, "_blank")}
-                  className="group relative p-px rounded-full bg-linear-to-tr from-blue-500/50 to-green-500/50 hover:from-blue-400 hover:to-green-400 transition-all duration-300 cursor-pointer"
+                {navItems.map(({ id, label }, i) => (
+                  <motion.button
+                    key={id}
+                    type="button"
+                    onClick={() => scrollToSection(id)}
+                    variants={{
+                      hidden: { opacity: 0, x: -12 },
+                      visible: { opacity: 1, x: 0 },
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                    className="block w-full text-left px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 rounded-md transition-colors active:bg-muted/80"
+                  >
+                    {label}
+                  </motion.button>
+                ))}
+                <motion.div
+                  variants={{
+                    hidden: { opacity: 0, x: -12 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  className="flex gap-2 pt-4 mt-2 border-t border-border"
                 >
-                  <div className="flex items-center justify-center bg-neutral-800/60 backdrop-blur-sm rounded-full w-9 h-9 group-hover:bg-neutral-700/60 border border-neutral-700/50 group-hover:border-blue-500/30 transition-all">
-                    <span className="text-white/80 text-lg group-hover:scale-110 group-hover:text-white transition-transform duration-300">
+                  {socials.map(({ icon, url, label }, i) => (
+                    <motion.a
+                      key={i}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileTap={{ scale: 0.9 }}
+                      className="flex items-center justify-center w-10 h-10 rounded-md text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                      aria-label={label}
+                    >
                       {icon}
-                    </span>
-                  </div>
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-      </nav>
+                    </motion.a>
+                  ))}
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
 
       {/* Back to Top */}
-      <button
-        onClick={scrollToTop}
-        className="fixed z-40 bottom-6 right-6 sm:bottom-10 sm:right-10 p-0.5 rounded-full bg-gradient-to-r from-blue-500/90 to-green-500/90 hover:from-blue-400 hover:to-green-400 border-2 border-blue-400/60 hover:border-green-400/80 shadow-lg hover:shadow-xl hover:shadow-green-500/20 transition-all hover:scale-110 group cursor-pointer backdrop-blur-sm"
-      >
-        <div className="bg-neutral-900/40 backdrop-blur-sm rounded-full p-3 group-hover:bg-neutral-800/40 transition-all">
-          <FaArrowUp className="text-white text-xl group-hover:scale-110 transition-transform" />
-        </div>
-      </button>
-
-      {/* Slide Animation */}
-      <style jsx>{`
-        @keyframes slideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-slideDown {
-          animation: slideDown 0.25s ease-out;
-        }
-      `}</style>
+      <AnimatePresence>
+        {scrolled && (
+          <motion.button
+            type="button"
+            initial={{ opacity: 0, scale: 0.8, y: 10 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
+            }}
+            exit={{ opacity: 0, scale: 0.8, y: 10 }}
+            whileHover={{ scale: 1.08, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={scrollToTop}
+            className="fixed z-40 bottom-6 right-6 sm:bottom-10 sm:right-10 flex items-center justify-center w-12 h-12 rounded-full border border-border bg-background/90 hover:border-accent/50 hover:bg-accent/10 shadow-lg backdrop-blur-sm"
+            aria-label="Back to top"
+          >
+            <FaArrowUp className="text-muted-foreground group-hover:text-accent text-lg transition-colors" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </>
   );
 }

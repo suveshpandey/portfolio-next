@@ -9,9 +9,9 @@ import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
-    <div className="h-auto overflow-x-hidden overflow-auto text-neutral-300 antialiased">
+    <div className="h-auto overflow-x-hidden overflow-auto text-muted-foreground antialiased">
       <div className="fixed top-0 -z-10 h-full w-full">
-        <div className="absolute top-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
+        <div className="absolute inset-0 z-[-2] bg-background bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,oklch(0.72_0.11_195_/_.07),transparent)]" />
       </div>
 
       <div className="relative w-full sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] 2xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
