@@ -69,11 +69,21 @@ export default function Projects() {
                         {project.title}
                       </h2>
                       
-                      {/* Description - Removed line-clamp and increased space */}
+                      {/* Description: short summary + bullet highlights */}
                       <div className="flex-1 mb-4 overflow-y-auto">
-                        <p className="text-muted-foreground leading-relaxed text-sm">
+                        <p className="text-muted-foreground leading-relaxed text-sm mb-3 text-center md:text-left">
                           {project.description}
                         </p>
+                        {project.highlights && (
+                          <ul className="space-y-2">
+                            {project.highlights.map((point, i) => (
+                              <li key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground leading-relaxed">
+                                <GoDotFill className="mt-1.5 shrink-0 text-accent" size={10} />
+                                <span>{point}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
 
                       <div className="flex flex-wrap gap-2 mb-4 justify-center">
