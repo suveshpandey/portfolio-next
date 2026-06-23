@@ -22,7 +22,6 @@ export default function HeroImageFrame({ children }: { children: React.ReactNode
     "M 11 5 L 89 5 Q 95 5 95 11 L 95 89 Q 95 95 89 95 L 11 95 Q 5 95 5 89 L 5 11 Q 5 5 11 5";
 
   const lightLength = 80;
-  const trailLength = 160;
   const length = pathLength ?? 400;
   const rampStartLength = 1; // start lighting at 1 unit, then 2, 3, 4... up to lightLength
   const rampPct = 0.065; // ~6.5% of loop for ramp up (1→80) and same for ramp down (80→1)
@@ -78,8 +77,8 @@ export default function HeroImageFrame({ children }: { children: React.ReactNode
             </feMerge>
           </filter>
           <linearGradient id="hero-line-dim" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="oklch(0.72 0.11 195 / 0.25)" />
-            <stop offset="100%" stopColor="oklch(0.72 0.11 195 / 0.25)" />
+            <stop offset="0%" stopColor="oklch(0.55 0.002 255 / 0.25)" />
+            <stop offset="100%" stopColor="oklch(0.55 0.002 255 / 0.25)" />
           </linearGradient>
         </defs>
         {/* Full path: dim (always visible) */}
@@ -96,7 +95,7 @@ export default function HeroImageFrame({ children }: { children: React.ReactNode
           ref={pathRef}
           d={pathD}
           fill="none"
-          stroke="oklch(0.72 0.11 195 / 0.4)"
+          stroke="oklch(0.92 0.001 255 / 0.48)"
           strokeWidth="0.55"
           strokeLinecap="round"
           strokeLinejoin="round"

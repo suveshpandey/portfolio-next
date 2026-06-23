@@ -1,0 +1,58 @@
+"use client";
+import { motion } from "framer-motion";
+import { GraduationCap } from "lucide-react";
+
+const education = [
+  {
+    school: "Mahatma Gandhi Chitrakoot Gramodaya Vishwavidyalaya",
+    degree: "B.Tech in Information Technology",
+    duration: "2023 – 2027",
+    detail: "GPA: 8.2 / 10.0 · Chitrakoot, MP",
+  },
+  {
+    school: "CBSE",
+    degree: "Senior Secondary (Class 12)",
+    duration: "2022 – 2023",
+    detail: "Percentage: 80.2%",
+  },
+];
+
+export default function Education() {
+  return (
+    <section id="education" className="section-wrapper w-full">
+      <div className="section-heading">
+        <h2 className="section-title">Education</h2>
+      </div>
+
+      <div className="relative flex w-full flex-col gap-7">
+        <span aria-hidden className="absolute left-[21px] top-6 bottom-6 w-px bg-border" />
+        {education.map((edu, idx) => (
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.4, delay: idx * 0.08 }}
+            className="relative z-10 flex items-start gap-4"
+          >
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-muted text-foreground">
+              <GraduationCap size={18} />
+            </div>
+            <div className="min-w-0 flex-1 pt-0.5">
+              <div className="flex flex-col gap-0.5 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                <div className="min-w-0">
+                  <h3 className="text-base font-semibold text-foreground">{edu.school}</h3>
+                  <p className="text-sm text-muted-foreground">{edu.degree}</p>
+                </div>
+                <span className="shrink-0 text-sm text-muted-foreground sm:text-right">
+                  {edu.duration}
+                </span>
+              </div>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{edu.detail}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}

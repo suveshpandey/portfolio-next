@@ -1,264 +1,166 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { FaLinkedinIn, FaGithub, FaArrowUp, FaBars, FaTimes } from "react-icons/fa";
+import { useRef, useState, useEffect, type ReactNode } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from "motion/react";
+import { Home, FileText, Sun, Moon } from "lucide-react";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
+import { CONTACT } from "@/lib";
 
-const navItems = [
-  { id: "about", label: "About" },
-  { id: "experience", label: "Experience" },
-  { id: "projects", label: "Projects" },
-  { id: "technologies", label: "Technologies" },
-  { id: "contact", label: "Contact" },
-];
+const BASE_SIZE = 40;
+const MAX_SIZE = 62;
+const RANGE = 150;
+const SPRING = { mass: 0.18, stiffness: 160, damping: 15 } as const;
 
-const socials = [
-  { icon: <FaLinkedinIn />, url: "https://www.linkedin.com/in/suvesh-pandey/", label: "LinkedIn" },
-  { icon: <FaGithub />, url: "https://github.com/suveshpandey", label: "GitHub" },
-  { icon: <BsTwitterX />, url: "https://x.com/suvesh_298", label: "X (Twitter)" },
-];
+function DockItem({
+  mouseX,
+  label,
+  href,
+  onClick,
+  children,
+}: {
+  mouseX: MotionValue<number>;
+  label: string;
+  href?: string;
+  onClick?: () => void;
+  children: ReactNode;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [hovered, setHovered] = useState(false);
 
-export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const distance = useTransform(mouseX, (val) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
+    return val - bounds.x - bounds.width / 2;
+  });
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 16);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const widthSync = useTransform(distance, [-RANGE, 0, RANGE], [BASE_SIZE, MAX_SIZE, BASE_SIZE]);
+  const width = useSpring(widthSync, SPRING);
 
-  const scrollToSection = (id: string) => {
-    setMenuOpen(false);
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const section = document.getElementById(id);
-        if (section) {
-          section.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      });
-    });
-  };
+  const iconScaleSync = useTransform(distance, [-RANGE, 0, RANGE], [1, 1.22, 1]);
+  const iconScale = useSpring(iconScaleSync, SPRING);
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const inner = (
+    <>
+      <span
+        aria-hidden
+        className="absolute left-1/2 top-1/2 h-9 w-9 -translate-x-1/2 -translate-y-1/2 scale-50 rounded-full bg-muted opacity-0 transition-all duration-200 ease-out group-hover:scale-100 group-hover:opacity-100"
+      />
+      <motion.span style={{ scale: iconScale }} className="relative z-10 flex items-center justify-center">
+        {children}
+      </motion.span>
+    </>
+  );
 
   return (
-    <>
-      <motion.nav
-        initial={{ y: -20, opacity: 0 }}
-        animate={{
-          y: 0,
-          opacity: 1,
-          transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] },
-        }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-background/95 border-b border-border backdrop-blur-md shadow-sm shadow-black/5"
-            : "bg-transparent border-b border-transparent"
-        }`}
-      >
-        <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            {/* Logo */}
-            <motion.button
-              type="button"
-              onClick={scrollToTop}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="flex items-center gap-1.5 text-foreground hover:text-accent transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md"
-            >
-              <span className="font-mono text-base sm:text-lg font-semibold tracking-tight">
-                <span className="text-accent">$</span>
-                <span className="text-foreground">devSuvesh</span>
-              </span>
-            </motion.button>
-
-            {/* Desktop Nav */}
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={{
-                visible: {
-                  transition: { staggerChildren: 0.05, delayChildren: 0.1 },
-                },
-                hidden: {},
-              }}
-              className="hidden lg:flex items-center gap-1"
-            >
-              {navItems.map(({ id, label }) => (
-                <motion.button
-                  key={id}
-                  type="button"
-                  onClick={() => scrollToSection(id)}
-                  variants={{
-                    hidden: { opacity: 0, y: -8 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
-                  whileHover={{ y: -1 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 rounded-md transition-colors duration-200 relative"
-                >
-                  {label}
-                </motion.button>
-              ))}
-            </motion.div>
-
-            {/* Social Icons - Desktop */}
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={{
-                visible: {
-                  transition: { staggerChildren: 0.06, delayChildren: 0.2 },
-                },
-                hidden: {},
-              }}
-              className="hidden sm:flex items-center gap-2"
-            >
-              {socials.map(({ icon, url, label }, i) => (
-                <motion.a
-                  key={i}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variants={{
-                    hidden: { opacity: 0, scale: 0.8 },
-                    visible: { opacity: 1, scale: 1 },
-                  }}
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.92 }}
-                  className="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-accent hover:bg-accent/10 border border-transparent hover:border-accent/30 transition-colors duration-200"
-                  aria-label={label}
-                >
-                  {icon}
-                </motion.a>
-              ))}
-            </motion.div>
-
-            {/* Mobile Menu Toggle */}
-            <motion.button
-              type="button"
-              onClick={() => setMenuOpen(!menuOpen)}
-              whileTap={{ scale: 0.92 }}
-              className="lg:hidden relative flex items-center justify-center w-10 h-10 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
-              aria-expanded={menuOpen}
-              aria-label="Toggle menu"
-            >
-              <span className="relative inline-flex w-5 h-5 items-center justify-center">
-                <motion.span
-                  animate={menuOpen ? { rotate: 90, opacity: 0 } : { rotate: 0, opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute inset-0 flex items-center justify-center"
-                >
-                  <FaBars size={20} />
-                </motion.span>
-                <motion.span
-                  initial={false}
-                  animate={menuOpen ? { rotate: 0, opacity: 1 } : { rotate: -90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute inset-0 flex items-center justify-center"
-                >
-                  <FaTimes size={20} />
-                </motion.span>
-              </span>
-            </motion.button>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {menuOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{
-                height: "auto",
-                opacity: 1,
-                transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
-              }}
-              exit={{
-                height: 0,
-                opacity: 0,
-                transition: { duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] },
-              }}
-              className="lg:hidden overflow-hidden border-t border-border bg-background/98 backdrop-blur-md"
-            >
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={{
-                  visible: {
-                    transition: { staggerChildren: 0.04, delayChildren: 0.08 },
-                  },
-                  hidden: {},
-                }}
-                className="mx-auto max-w-[1400px] px-4 py-4 space-y-0.5"
-              >
-                {navItems.map(({ id, label }, i) => (
-                  <motion.button
-                    key={id}
-                    type="button"
-                    onClick={() => scrollToSection(id)}
-                    variants={{
-                      hidden: { opacity: 0, x: -12 },
-                      visible: { opacity: 1, x: 0 },
-                    }}
-                    whileTap={{ scale: 0.98 }}
-                    className="block w-full text-left px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 rounded-md transition-colors active:bg-muted/80"
-                  >
-                    {label}
-                  </motion.button>
-                ))}
-                <motion.div
-                  variants={{
-                    hidden: { opacity: 0, x: -12 },
-                    visible: { opacity: 1, x: 0 },
-                  }}
-                  className="flex gap-2 pt-4 mt-2 border-t border-border"
-                >
-                  {socials.map(({ icon, url, label }, i) => (
-                    <motion.a
-                      key={i}
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileTap={{ scale: 0.9 }}
-                      className="flex items-center justify-center w-10 h-10 rounded-md text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors"
-                      aria-label={label}
-                    >
-                      {icon}
-                    </motion.a>
-                  ))}
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.nav>
-
-      {/* Back to Top */}
+    <motion.div
+      ref={ref}
+      style={{ width, height: BASE_SIZE }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="relative flex items-center justify-center"
+    >
       <AnimatePresence>
-        {scrolled && (
-          <motion.button
-            type="button"
-            initial={{ opacity: 0, scale: 0.8, y: 10 }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              y: 0,
-              transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
-            }}
-            exit={{ opacity: 0, scale: 0.8, y: 10 }}
-            whileHover={{ scale: 1.08, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={scrollToTop}
-            className="fixed z-40 bottom-6 right-6 sm:bottom-10 sm:right-10 flex items-center justify-center w-12 h-12 rounded-full border border-border bg-background/90 hover:border-accent/50 hover:bg-accent/10 shadow-lg backdrop-blur-sm"
-            aria-label="Back to top"
+        {hovered && (
+          <motion.span
+            initial={{ opacity: 0, y: 8, scale: 0.85 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 6, scale: 0.85 }}
+            transition={{ type: "spring", stiffness: 400, damping: 26 }}
+            className="pointer-events-none absolute -top-10 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-lg border border-border bg-background px-2.5 py-1 text-xs font-medium text-foreground shadow-lg"
           >
-            <FaArrowUp className="text-muted-foreground group-hover:text-accent text-lg transition-colors" />
-          </motion.button>
+            {label}
+            <span className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-b border-r border-border bg-background" />
+          </motion.span>
         )}
       </AnimatePresence>
-    </>
+
+      {href ? (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={label}
+          className="group relative flex h-full w-full items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+        >
+          {inner}
+        </a>
+      ) : (
+        <button
+          type="button"
+          onClick={onClick}
+          aria-label={label}
+          className="group relative flex h-full w-full items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+        >
+          {inner}
+        </button>
+      )}
+    </motion.div>
+  );
+}
+
+export default function Navbar() {
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    if (typeof window === "undefined") return "dark";
+    const savedTheme = window.localStorage.getItem("theme");
+    if (savedTheme === "light" || savedTheme === "dark") return savedTheme;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    window.localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+  const mouseX = useMotionValue(Infinity);
+
+  const links = [
+    { label: "Home", icon: <Home size={18} />, onClick: scrollToTop },
+    { label: "GitHub", icon: <FaGithub size={18} />, href: CONTACT.github },
+    { label: "LinkedIn", icon: <FaLinkedinIn size={17} />, href: CONTACT.linkedin },
+    { label: "X (Twitter)", icon: <BsTwitterX size={15} />, href: CONTACT.twitter },
+    { label: "Resume", icon: <FileText size={17} />, href: "/suvesh_resume.pdf" },
+  ];
+
+  return (
+    <motion.nav
+      initial={{ y: 24, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="fixed inset-x-0 bottom-5 z-50 flex justify-center px-4"
+    >
+      <div
+        onMouseMove={(e) => mouseX.set(e.clientX)}
+        onMouseLeave={() => mouseX.set(Infinity)}
+        className="nav-surface flex items-center gap-1 rounded-full px-2.5 py-1.5"
+      >
+        {links.map((item) => (
+          <DockItem
+            key={item.label}
+            mouseX={mouseX}
+            label={item.label}
+            href={item.href}
+            onClick={item.onClick}
+          >
+            {item.icon}
+          </DockItem>
+        ))}
+
+        <span className="mx-1 h-6 w-px self-center bg-border" />
+
+        <DockItem mouseX={mouseX} label="Toggle theme" onClick={toggleTheme}>
+          {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+        </DockItem>
+      </div>
+    </motion.nav>
   );
 }

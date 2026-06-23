@@ -3,22 +3,25 @@ import HeroSection from "@/components/HeroSection";
 import Technologies from "@/components/Technologies";
 import AboutSection from "@/components/AboutSection";
 import Experience from "@/components/Experience";
+import Education from "@/components/Education";
 import Projects from "@/components/Projects";
 import CodingProfiles from "@/components/CodingProfiles";
 import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
-    <div className="h-auto overflow-x-hidden overflow-auto text-muted-foreground antialiased">
+    <div className="h-auto overflow-x-hidden overflow-auto pb-24 text-muted-foreground antialiased lg:pb-0">
       <div className="fixed top-0 -z-10 h-full w-full">
-        <div className="absolute inset-0 z-[-2] bg-background bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,oklch(0.72_0.11_195_/_.07),transparent)]" />
+        <div className="absolute inset-0 z-[-2] bg-background" />
+        <div className="absolute inset-0 z-[-1] bg-[radial-gradient(ellipse_70%_40%_at_50%_-10%,oklch(0.4_0.004_255_/_.10),transparent_70%)]" />
       </div>
 
-      <div className="relative w-full sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] 2xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <Navbar />
+      <Navbar />
+      <div className="relative mx-auto w-full max-w-2xl px-5 sm:px-6">
         <HeroSection />
         <AboutSection />
         <Experience />
+        <Education />
         <Technologies />
         <Projects />
         <CodingProfiles />
