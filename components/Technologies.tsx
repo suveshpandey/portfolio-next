@@ -2,7 +2,6 @@
 import { motion } from "framer-motion";
 
 const skills = [
-  "C",
   "C++",
   "JavaScript",
   "TypeScript",
@@ -10,18 +9,21 @@ const skills = [
   "Next.js",
   "Node.js",
   "Express.js",
+  "FastAPI",
   "Tailwind CSS",
-  "HTML",
-  "CSS",
-  "MongoDB",
-  "PostgreSQL",
+  "TanStack Query",
+  "Prisma",
+  "Kysely",
   "REST APIs",
-  "Git",
-  "GitHub",
-  "Docker",
+  "Server-Sent Events",
+  "PostgreSQL",
+  "MySQL",
+  "MongoDB",
+  "Redis",
   "AWS",
-  "Postman",
-  "Linux",
+  "Vercel Sandbox",
+  "Docker",
+  "Git",
 ];
 
 export default function Technologies() {

@@ -9,7 +9,7 @@ const experiences = [
     duration: "Feb 2026 – Present",
     logo: "/images/euron-logo.png",
     description:
-      "Building AI-powered platforms — a US healthcare system that turns live conversations into SOAP notes and medical codes, plus EuronTracker, a full internal project-management tool on an event-driven AWS backend.",
+      "Engineered Natrajan, a US AI healthcare platform that turns live conversations into SOAP notes and medical codes on an event-driven AWS (ECS, SQS) backend. Also built EuronTracker, a Jira-class internal project-management platform — multi-view Kanban, real-time chat, time tracking, and analytics — with a three-tier RBAC system and 80+ REST endpoints.",
   },
   {
     company: "Euron",
@@ -17,7 +17,7 @@ const experiences = [
     duration: "Nov 2025 – Jan 2026",
     logo: "/images/euron-logo.png",
     description:
-      "Built StudyTap, a RAG-based AI study assistant serving 2K–4K students, with async FastAPI pipelines and AWS (S3, Kendra, SQS) document ingestion.",
+      "Built StudyTap, a RAG-based AI platform serving 2K–4K students with answers in under 25s. Developed async FastAPI pipelines on AWS (S3, Kendra, SQS), with PDF text and diagram extraction via PyMuPDF and OpenCV.",
   },
 ];
 
