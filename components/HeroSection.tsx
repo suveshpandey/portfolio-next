@@ -28,14 +28,16 @@ export default function HeroSection() {
         </motion.h1>
 
         <motion.p
-          variants={fadeUp(0.08)}
+          variants={fadeUp(0.1)}
           initial="hidden"
           animate="visible"
-          className="mt-3 text-lg leading-snug text-muted-foreground sm:text-xl"
+          className="mt-3 text-base leading-relaxed text-muted-foreground"
         >
-          Building AI-powered products
-          <br />
-          with solid full-stack engineering.
+          I build{" "}
+          <span className="font-medium text-foreground">AI-powered products</span> with
+          solid full-stack engineering - designing event-driven backends, real-time
+          systems, and clean APIs that scale from prototype to production. I like turning
+          hard problems into products people actually use.
         </motion.p>
 
         <motion.button

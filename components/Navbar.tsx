@@ -106,17 +106,26 @@ function DockItem({
 }
 
 export default function Navbar() {
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    if (typeof window === "undefined") return "dark";
-    const savedTheme = window.localStorage.getItem("theme");
-    if (savedTheme === "light" || savedTheme === "dark") return savedTheme;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  });
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    const savedTheme = window.localStorage.getItem("theme");
+    const initial =
+      savedTheme === "light" || savedTheme === "dark"
+        ? savedTheme
+        : window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+    setTheme(initial);
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
     document.documentElement.classList.toggle("dark", theme === "dark");
     window.localStorage.setItem("theme", theme);
-  }, [theme]);
+  }, [theme, mounted]);
 
   const toggleTheme = () => setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
@@ -158,7 +167,15 @@ export default function Navbar() {
         <span className="mx-1 h-6 w-px self-center bg-border" />
 
         <DockItem mouseX={mouseX} label="Toggle theme" onClick={toggleTheme}>
-          {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          {mounted ? (
+            theme === "dark" ? (
+              <Sun size={18} />
+            ) : (
+              <Moon size={18} />
+            )
+          ) : (
+            <span className="block h-[18px] w-[18px]" />
+          )}
         </DockItem>
       </div>
     </motion.nav>

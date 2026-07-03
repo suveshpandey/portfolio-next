@@ -19,19 +19,13 @@ export default function AboutSection() {
         I&apos;m a software engineer focused on building{" "}
         <span className="font-medium text-foreground">AI-powered products</span>. At{" "}
         <span className="font-medium text-foreground">Euron</span>, I&apos;ve shipped
-        production systems end to end — an AI healthcare platform that converts live
-        conversations into clinical notes, a{" "}
-        <span className="font-medium text-foreground">RAG</span> study assistant serving
-        thousands of students, and a Jira-class internal project-management platform. I
-        work across the stack with{" "}
+        production systems end to end — from an AI healthcare platform to a RAG study
+        assistant used by thousands of students. I work across the stack with{" "}
         <span className="font-medium text-foreground">Next.js</span>,{" "}
         <span className="font-medium text-foreground">TypeScript</span>,{" "}
-        <span className="font-medium text-foreground">FastAPI</span>,{" "}
-        <span className="font-medium text-foreground">Node.js</span>,{" "}
-        <span className="font-medium text-foreground">PostgreSQL</span>, and{" "}
-        <span className="font-medium text-foreground">AWS</span>, designing event-driven
-        backends and real-time systems — and I care about clean architecture, performance,
-        and shipping things that actually work.
+        <span className="font-medium text-foreground">FastAPI</span>, and{" "}
+        <span className="font-medium text-foreground">AWS</span>, and care about clean
+        architecture and shipping things that actually work.
       </p>
     </motion.section>
   );

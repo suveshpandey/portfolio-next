@@ -1,7 +1,7 @@
 "use client";
 import { CONTACT } from "@/lib";
 import { motion } from "framer-motion";
-import { Mail, Copy, Check, Clock, Phone } from "lucide-react";
+import { Mail, Copy, Check, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
 
 export default function Contact() {
@@ -74,8 +74,8 @@ export default function Contact() {
           </button>
 
           <div className="flex items-center gap-2.5 rounded-xl border border-border bg-background/40 px-4 py-3">
-            <Clock size={16} className="shrink-0 text-muted-foreground" />
-            <span className="truncate text-sm text-foreground">Usually replies within a day</span>
+            <MapPin size={16} className="shrink-0 text-muted-foreground" />
+            <span className="truncate text-sm text-foreground">India · Open to remote</span>
           </div>
         </div>
       </motion.div>

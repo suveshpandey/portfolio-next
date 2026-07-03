@@ -7,7 +7,7 @@ const experiences = [
     company: "Euron",
     role: "Associate Software Engineer",
     duration: "Feb 2026 – Present",
-    logo: "/images/euron-logo.png",
+    logo: "/images/euron-logo-v2.png",
     description:
       "Engineered Natrajan, a US AI healthcare platform that turns live conversations into SOAP notes and medical codes on an event-driven AWS (ECS, SQS) backend. Also built EuronTracker, a Jira-class internal project-management platform — multi-view Kanban, real-time chat, time tracking, and analytics — with a three-tier RBAC system and 80+ REST endpoints.",
   },
@@ -15,7 +15,7 @@ const experiences = [
     company: "Euron",
     role: "Software Engineering Intern",
     duration: "Nov 2025 – Jan 2026",
-    logo: "/images/euron-logo.png",
+    logo: "/images/euron-logo-v2.png",
     description:
       "Built StudyTap, a RAG-based AI platform serving 2K–4K students with answers in under 25s. Developed async FastAPI pipelines on AWS (S3, Kendra, SQS), with PDF text and diagram extraction via PyMuPDF and OpenCV.",
   },
