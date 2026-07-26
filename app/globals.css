@@ -192,6 +192,13 @@
   box-shadow: 0 16px 30px -20px oklch(0 0 0 / 0.45);
 }
 
+/* GitHub calendar (react-activity-calendar) - highlight total contributions count */
+.react-activity-calendar__count {
+  color: var(--foreground);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
 /* Custom scrollbar - matches theme */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: oklch(0.12 0.01 260); border-radius: 10px; }

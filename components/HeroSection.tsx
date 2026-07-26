@@ -16,7 +16,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="flex w-full items-center justify-between gap-6 pt-20 pb-10 sm:pt-28">
+    <section className="flex w-full items-start justify-between gap-5 pt-20 pb-10 sm:items-center sm:gap-6 sm:pt-28">
       <div className="min-w-0">
         <motion.h1
           variants={fadeUp(0)}
@@ -33,11 +33,9 @@ export default function HeroSection() {
           animate="visible"
           className="mt-3 text-base leading-relaxed text-muted-foreground"
         >
-          I build{" "}
+          Building{" "}
           <span className="font-medium text-foreground">AI-powered products</span> with
-          solid full-stack engineering - designing event-driven backends, real-time
-          systems, and clean APIs that scale from prototype to production. I like turning
-          hard problems into products people actually use.
+          solid full-stack engineering.
         </motion.p>
 
         <motion.button
@@ -59,7 +57,7 @@ export default function HeroSection() {
         transition={{ duration: 0.6, delay: 0.15 }}
         className="relative shrink-0"
       >
-        <div className="relative h-24 w-24 overflow-hidden rounded-full border border-border sm:h-32 sm:w-32">
+        <div className="relative h-28 w-28 overflow-hidden rounded-full border border-border sm:h-32 sm:w-32">
           <Image
             src="/images/profilePic.jpg"
             alt="Suvesh Pandey"

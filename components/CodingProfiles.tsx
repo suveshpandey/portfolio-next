@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import GitHubCalendar from "react-github-calendar";
 import { motion } from "framer-motion";
+import { ExternalLink } from "lucide-react";
 
 const GITHUB_ACCOUNTS = [
   { id: "personal" as const, username: "suveshpandey", label: "Personal" },
@@ -58,22 +59,28 @@ export default function CodingProfiles() {
       >
         <div className="section-card rounded-xl p-6 flex flex-col gap-6 transition-all duration-200">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <a
-              href={`https://github.com/${current.username}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-fit text-xl font-semibold py-1 text-foreground transition-colors"
-            >
-              GitHub — {current.label}
-            </a>
+            <div className="min-w-0">
+              <h3 className="text-xl font-semibold text-foreground">
+                GitHub — {current.label}
+              </h3>
+              <a
+                href={`https://github.com/${current.username}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
+                github.com/{current.username}
+                <ExternalLink size={13} className="shrink-0" />
+              </a>
+            </div>
             {/* Toggle: Personal vs Work account */}
-            <div className="flex rounded-lg border border-border bg-background/70 p-1 gap-0.5">
+            <div className="flex w-full shrink-0 rounded-lg border border-border bg-background/70 p-1 gap-0.5 sm:w-auto">
               {GITHUB_ACCOUNTS.map((acc) => (
                 <button
                   key={acc.id}
                   type="button"
                   onClick={() => setGithubAccount(acc.id)}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-colors sm:flex-initial ${
                     githubAccount === acc.id
                       ? "bg-foreground text-background shadow-sm"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
