@@ -11,10 +11,6 @@ const fadeUp = (delay: number) => ({
 });
 
 export default function HeroSection() {
-  const openEmail = () => {
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT.email}`, "_blank");
-  };
-
   return (
     <section className="flex w-full items-start justify-between gap-5 pt-20 pb-10 sm:items-center sm:gap-6 sm:pt-28">
       <div className="min-w-0">
@@ -38,9 +34,10 @@ export default function HeroSection() {
           solid full-stack engineering.
         </motion.p>
 
-        <motion.button
-          type="button"
-          onClick={openEmail}
+        <motion.a
+          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT.email}`}
+          target="_blank"
+          rel="noopener noreferrer"
           variants={fadeUp(0.16)}
           initial="hidden"
           animate="visible"
@@ -48,7 +45,7 @@ export default function HeroSection() {
         >
           <Mail size={18} className="shrink-0" />
           {CONTACT.email}
-        </motion.button>
+        </motion.a>
       </div>
 
       <motion.div

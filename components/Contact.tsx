@@ -37,7 +37,7 @@ export default function Contact() {
         transition={{ duration: 0.5 }}
         className="section-card w-full p-6 sm:p-8"
       >
-        <div className="inline-flex items-center gap-2.5 rounded-full border border-border bg-muted/60 px-3.5 py-1.5">
+        <div className="flex w-full items-center justify-center gap-2.5 rounded-full border border-border bg-muted/60 px-3.5 py-2.5 sm:w-fit sm:justify-start sm:py-1.5">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
