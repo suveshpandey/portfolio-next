@@ -177,7 +177,7 @@ export default function Navbar() {
 
     const sweep = overlay.animate(
       { transform: ["scale(0)", "scale(1)"] },
-      { duration: 700, easing: "linear", fill: "forwards" }
+      { duration: 500, easing: "linear", fill: "forwards" }
     );
 
     sweep.finished
@@ -185,7 +185,7 @@ export default function Navbar() {
         apply();
         const fade = overlay.animate(
           { opacity: [1, 0] },
-          { duration: 300, easing: "ease-out", fill: "forwards" }
+          { duration: 250, easing: "ease-out", fill: "forwards" }
         );
         return fade.finished;
       })
