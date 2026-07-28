@@ -3,6 +3,7 @@ import { useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
+import TextReveal from "@/components/TextReveal";
 
 type ExperienceEntry = {
   company: string;
@@ -181,7 +182,9 @@ export default function Experience() {
   return (
     <section id="experience" className="section-wrapper w-full">
       <div className="section-heading">
-        <h2 className="section-title">Work Experience</h2>
+        <TextReveal as="h2" stagger={0.05} className="section-title">
+          Work Experience
+        </TextReveal>
       </div>
 
       <div className="relative flex w-full flex-col gap-7">

@@ -2,6 +2,7 @@
 import { PROJECTS } from "@/lib";
 import { motion } from "framer-motion";
 import { Globe } from "lucide-react";
+import TextReveal from "@/components/TextReveal";
 import { FaGithub } from "react-icons/fa";
 
 function Tooltip({ label }: { label: string }) {
@@ -17,11 +18,13 @@ export default function Projects() {
   return (
     <section id="projects" className="section-wrapper w-full">
       <div className="section-heading">
-        <h2 className="section-title">Projects</h2>
-        <p className="section-subtitle">
+        <TextReveal as="h2" className="section-title">
+          Projects
+        </TextReveal>
+        <TextReveal as="p" delay={0.08} stagger={0.015} className="section-subtitle">
           A selection of AI and full-stack apps I&apos;ve built, with the stack used and
           links to live demos or source.
-        </p>
+        </TextReveal>
       </div>
 
       <div className="flex w-full flex-col gap-5">

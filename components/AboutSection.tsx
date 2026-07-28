@@ -1,21 +1,21 @@
 "use client";
-import { motion } from "framer-motion";
+import TextReveal from "@/components/TextReveal";
 
 export default function AboutSection() {
   return (
-    <motion.section
-      id="about"
-      whileInView={{ opacity: 1, y: 0 }}
-      initial={{ opacity: 0, y: 24 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5 }}
-      className="section-wrapper w-full"
-    >
+    <section id="about" className="section-wrapper w-full">
       <div className="section-heading">
-        <h2 className="section-title">About</h2>
+        <TextReveal as="h2" className="section-title">
+          About
+        </TextReveal>
       </div>
 
-      <p className="text-base leading-relaxed text-muted-foreground">
+      <TextReveal
+        as="p"
+        delay={0.08}
+        stagger={0.012}
+        className="text-base leading-relaxed text-muted-foreground"
+      >
         I&apos;m a software engineer focused on building{" "}
         <span className="font-medium text-foreground">AI-powered products</span>. At{" "}
         <span className="font-medium text-foreground">Euron</span>, I&apos;ve shipped
@@ -31,7 +31,7 @@ export default function AboutSection() {
         <span className="font-medium text-foreground">FastAPI</span>, and{" "}
         <span className="font-medium text-foreground">AWS</span>, and care
         about clean architecture and shipping things that actually work.
-      </p>
-    </motion.section>
+      </TextReveal>
+    </section>
   );
 }

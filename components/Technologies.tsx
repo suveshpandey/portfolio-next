@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import TextReveal from "@/components/TextReveal";
 
 const skills = [
   "C++",
@@ -30,7 +31,9 @@ export default function Technologies() {
   return (
     <section id="technologies" className="section-wrapper w-full">
       <div className="section-heading">
-        <h2 className="section-title">Skills</h2>
+        <TextReveal as="h2" className="section-title">
+          Skills
+        </TextReveal>
       </div>
 
       <div className="flex flex-wrap gap-2.5">

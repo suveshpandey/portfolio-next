@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { GraduationCap } from "lucide-react";
+import TextReveal from "@/components/TextReveal";
 
 const education = [
   {
@@ -21,7 +22,9 @@ export default function Education() {
   return (
     <section id="education" className="section-wrapper w-full">
       <div className="section-heading">
-        <h2 className="section-title">Education</h2>
+        <TextReveal as="h2" className="section-title">
+          Education
+        </TextReveal>
       </div>
 
       <div className="relative flex w-full flex-col gap-7">

@@ -2,6 +2,7 @@
 import { CONTACT } from "@/lib";
 import { motion } from "framer-motion";
 import { Mail, Copy, Check, MapPin, Phone } from "lucide-react";
+import TextReveal from "@/components/TextReveal";
 import { useState } from "react";
 
 export default function Contact() {
@@ -23,11 +24,13 @@ export default function Contact() {
   return (
     <section id="contact" className="section-wrapper w-full">
       <div className="section-heading">
-        <h2 className="section-title">Get in touch</h2>
-        <p className="section-subtitle">
+        <TextReveal as="h2" stagger={0.05} className="section-title">
+          Get in touch
+        </TextReveal>
+        <TextReveal as="p" delay={0.08} stagger={0.015} className="section-subtitle">
           I&apos;m open to new roles and interesting AI / full-stack projects. The fastest
           way to reach me is email.
-        </p>
+        </TextReveal>
       </div>
 
       <motion.div

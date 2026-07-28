@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import GitHubCalendar from "react-github-calendar";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
+import TextReveal from "@/components/TextReveal";
 
 const GITHUB_ACCOUNTS = [
   { id: "personal" as const, username: "suveshpandey", label: "Personal" },
@@ -46,7 +47,9 @@ export default function CodingProfiles() {
         transition={{ duration: 0.5 }}
         className="section-heading"
       >
-        <h2 className="section-title">Coding Activity</h2>
+        <TextReveal as="h2" stagger={0.05} className="section-title">
+          Coding Activity
+        </TextReveal>
       </motion.div>
 
       {/* GitHub Card */}

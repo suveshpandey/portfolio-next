@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { Mail } from "lucide-react";
 import { CONTACT } from "@/lib";
+import TextReveal from "@/components/TextReveal";
 
 const fadeUp = (delay: number) => ({
   hidden: { y: 20, opacity: 0 },
@@ -14,31 +15,30 @@ export default function HeroSection() {
   return (
     <section className="flex w-full items-start justify-between gap-5 pt-20 pb-10 sm:items-center sm:gap-6 sm:pt-28">
       <div className="min-w-0">
-        <motion.h1
-          variants={fadeUp(0)}
-          initial="hidden"
-          animate="visible"
+        <TextReveal
+          as="h1"
+          stagger={0.05}
           className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
         >
           Hi, I&apos;m Suvesh
-        </motion.h1>
+        </TextReveal>
 
-        <motion.p
-          variants={fadeUp(0.1)}
-          initial="hidden"
-          animate="visible"
+        <TextReveal
+          as="p"
+          delay={0.12}
+          stagger={0.03}
           className="mt-3 text-base leading-relaxed text-muted-foreground"
         >
           Building{" "}
           <span className="font-medium text-foreground">AI-powered products</span> with
           solid full-stack engineering.
-        </motion.p>
+        </TextReveal>
 
         <motion.a
           href={`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT.email}`}
           target="_blank"
           rel="noopener noreferrer"
-          variants={fadeUp(0.16)}
+          variants={fadeUp(0.35)}
           initial="hidden"
           animate="visible"
           className="mt-5 inline-flex items-center gap-2.5 text-sm font-medium text-foreground transition-colors hover:text-muted-foreground sm:text-base"
