@@ -29,7 +29,7 @@ function DockItem({
   mouseX: MotionValue<number>;
   label: string;
   href?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   children: ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -127,7 +127,74 @@ export default function Navbar() {
     window.localStorage.setItem("theme", theme);
   }, [theme, mounted]);
 
-  const toggleTheme = () => setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  const themeAnimating = useRef(false);
+
+  const toggleTheme = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const next = theme === "dark" ? "light" : "dark";
+    const apply = () => {
+      document.documentElement.classList.toggle("dark", next === "dark");
+      window.localStorage.setItem("theme", next);
+      setTheme(next);
+    };
+
+    if (themeAnimating.current) return;
+
+    const overlay = document.createElement("div");
+    if (typeof overlay.animate !== "function") {
+      apply();
+      return;
+    }
+    themeAnimating.current = true;
+
+    // Keep in sync with --background in globals.css (:root / .dark)
+    const NEW_BG =
+      next === "dark" ? "oklch(0.115 0.003 255)" : "oklch(0.985 0.002 255)";
+
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const radius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+
+    // A circle centered on the button, grown via transform: scale() —
+    // compositor-accelerated, so it stays smooth from the very first frame
+    Object.assign(overlay.style, {
+      position: "fixed",
+      left: `${x - radius}px`,
+      top: `${y - radius}px`,
+      width: `${radius * 2}px`,
+      height: `${radius * 2}px`,
+      borderRadius: "50%",
+      background: NEW_BG,
+      transform: "scale(0)",
+      zIndex: "9999",
+      pointerEvents: "none",
+      willChange: "transform",
+    });
+    document.body.appendChild(overlay);
+
+    const sweep = overlay.animate(
+      { transform: ["scale(0)", "scale(1)"] },
+      { duration: 700, easing: "linear", fill: "forwards" }
+    );
+
+    sweep.finished
+      .then(() => {
+        apply();
+        const fade = overlay.animate(
+          { opacity: [1, 0] },
+          { duration: 300, easing: "ease-out", fill: "forwards" }
+        );
+        return fade.finished;
+      })
+      .catch(apply)
+      .finally(() => {
+        overlay.remove();
+        themeAnimating.current = false;
+      });
+  };
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   const mouseX = useMotionValue(Infinity);
