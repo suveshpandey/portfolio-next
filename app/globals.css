@@ -28,6 +28,8 @@
 }
 
 @theme inline {
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -76,7 +78,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -169,8 +171,10 @@
   border: 1px solid var(--border);
   background: color-mix(in oklab, var(--background) 90%, var(--muted));
   padding: 0.3rem 0.65rem;
-  font-size: 0.75rem;
+  font-family: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+  font-size: 0.72rem;
   font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--muted-foreground);
 }
 
