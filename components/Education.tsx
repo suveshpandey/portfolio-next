@@ -44,14 +44,38 @@ export default function Education() {
             <div className="min-w-0 flex-1 pt-0.5">
               <div className="flex flex-col gap-0.5 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
                 <div className="min-w-0">
-                  <h3 className="text-base font-semibold text-foreground">{edu.school}</h3>
-                  <p className="text-sm text-muted-foreground">{edu.degree}</p>
+                  <TextReveal
+                    as="h3"
+                    stagger={0.02}
+                    className="text-base font-semibold text-foreground"
+                  >
+                    {edu.school}
+                  </TextReveal>
+                  <TextReveal
+                    as="p"
+                    stagger={0.02}
+                    delay={0.05}
+                    className="text-sm text-muted-foreground"
+                  >
+                    {edu.degree}
+                  </TextReveal>
                 </div>
-                <span className="shrink-0 text-sm text-muted-foreground sm:text-right">
+                <TextReveal
+                  as="span"
+                  stagger={0.03}
+                  className="shrink-0 text-sm text-muted-foreground sm:text-right"
+                >
                   {edu.duration}
-                </span>
+                </TextReveal>
               </div>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{edu.detail}</p>
+              <TextReveal
+                as="p"
+                stagger={0.02}
+                delay={0.1}
+                className="mt-2 text-sm leading-relaxed text-muted-foreground"
+              >
+                {edu.detail}
+              </TextReveal>
             </div>
           </motion.div>
         ))}

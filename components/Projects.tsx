@@ -37,12 +37,21 @@ export default function Projects() {
             transition={{ duration: 0.4 }}
             className="section-card p-5 sm:p-6"
           >
-            <h3 className="text-base font-semibold text-foreground sm:text-lg">
+            <TextReveal
+              as="h3"
+              stagger={0.04}
+              className="text-base font-semibold text-foreground sm:text-lg"
+            >
               {project.title}
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            </TextReveal>
+            <TextReveal
+              as="p"
+              stagger={0.008}
+              delay={0.06}
+              className="mt-2 text-sm leading-relaxed text-muted-foreground"
+            >
               {project.description}
-            </p>
+            </TextReveal>
 
             <div className="mt-4 flex flex-wrap gap-2">
               {project.technologies.map((tech) => (

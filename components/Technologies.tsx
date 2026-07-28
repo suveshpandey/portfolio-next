@@ -40,10 +40,10 @@ export default function Technologies() {
         {skills.map((skill, i) => (
           <motion.span
             key={skill}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 3 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.3, delay: i * 0.02 }}
+            transition={{ duration: 0.4, delay: i * 0.02, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="skill-pill"
           >
             {skill}

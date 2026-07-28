@@ -45,9 +45,9 @@ export default function Contact() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
           </span>
-          <span className="text-xs font-medium text-foreground">
+          <TextReveal as="span" stagger={0.025} className="text-xs font-medium text-foreground">
             Available for full-time &amp; remote roles
-          </span>
+          </TextReveal>
         </div>
 
         <button
@@ -56,7 +56,7 @@ export default function Contact() {
           className="group mt-6 flex w-full items-center justify-center gap-2.5 rounded-xl bg-foreground px-6 py-4 text-sm font-semibold text-background transition-opacity hover:opacity-90 sm:text-base"
         >
           <Mail size={18} className="transition-transform group-hover:-translate-y-0.5" />
-          {CONTACT.email}
+          <TextReveal as="span" delay={0.1}>{CONTACT.email}</TextReveal>
         </button>
 
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -67,7 +67,9 @@ export default function Contact() {
           >
             <span className="flex min-w-0 items-center gap-2.5">
               <Phone size={16} className="shrink-0 text-muted-foreground" />
-              <span className="truncate text-sm text-foreground">{phone}</span>
+              <TextReveal as="span" stagger={0.03} className="truncate text-sm text-foreground">
+                {phone}
+              </TextReveal>
             </span>
             {copiedField === "phone" ? (
               <Check size={15} className="shrink-0 text-green-500" />
@@ -78,7 +80,9 @@ export default function Contact() {
 
           <div className="flex items-center gap-2.5 rounded-xl border border-border bg-background/40 px-4 py-3">
             <MapPin size={16} className="shrink-0 text-muted-foreground" />
-            <span className="truncate text-sm text-foreground">India · Open to remote</span>
+            <TextReveal as="span" stagger={0.03} className="truncate text-sm text-foreground">
+              India · Open to remote
+            </TextReveal>
           </div>
         </div>
       </motion.div>
