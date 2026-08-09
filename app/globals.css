@@ -72,6 +72,28 @@
   --accent-border: oklch(0.95 0.002 255 / 0.24);
 }
 
+/* On <html> only while a theme switch is in flight, then removed — leaving it
+   on would slow down ordinary hover states.
+   Keep the duration in sync with THEME_TRANSITION_MS in components/Navbar.tsx. */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease,
+    color 250ms ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition,
+  .theme-transition *,
+  .theme-transition *::before,
+  .theme-transition *::after {
+    transition: none !important;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
