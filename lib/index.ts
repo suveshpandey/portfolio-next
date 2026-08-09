@@ -190,5 +190,7 @@ export const CONTACT = {
   location: "Madhya Pradesh, India",
   linkedin: "https://linkedin.com/in/suvesh-pandey",
   github: "https://github.com/suveshpandey",
-  twitter: "https://twitter.com/suvesh_298"
+  twitter: "https://twitter.com/suvesh_298",
+  resume:
+    "https://drive.google.com/file/d/1pEFJDx1ZaM6UeOMJRgsIoL74ZtGhAlFl/view"
 };

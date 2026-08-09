@@ -167,7 +167,7 @@ export default function Navbar() {
     { label: "GitHub", icon: <FaGithub size={18} />, href: CONTACT.github },
     { label: "LinkedIn", icon: <FaLinkedinIn size={17} />, href: CONTACT.linkedin },
     { label: "X (Twitter)", icon: <BsTwitterX size={15} />, href: CONTACT.twitter },
-    { label: "Resume", icon: <FileText size={17} />, href: "/suvesh_resume.pdf" },
+    { label: "Resume", icon: <FileText size={17} />, href: CONTACT.resume },
   ];
 
   return (
