@@ -127,37 +127,8 @@ export default function Navbar() {
     window.localStorage.setItem("theme", theme);
   }, [theme, mounted]);
 
-  const themeTimer = useRef<number | null>(null);
-
-  useEffect(
-    () => () => {
-      if (themeTimer.current !== null) window.clearTimeout(themeTimer.current);
-    },
-    []
-  );
-
-  const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    const root = document.documentElement;
-
-    // Keep in sync with the duration in .theme-transition (globals.css)
-    const THEME_TRANSITION_MS = 250;
-
-    if (themeTimer.current !== null) window.clearTimeout(themeTimer.current);
-    root.classList.add("theme-transition");
-    // Commit the transition property before the colours change, so the browser
-    // has something to interpolate from rather than snapping to the new theme
-    void root.offsetWidth;
-
-    root.classList.toggle("dark", next === "dark");
-    window.localStorage.setItem("theme", next);
-    setTheme(next);
-
-    themeTimer.current = window.setTimeout(() => {
-      root.classList.remove("theme-transition");
-      themeTimer.current = null;
-    }, THEME_TRANSITION_MS);
-  };
+  // The effect above applies the class and persists the choice — nothing else to do.
+  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   const mouseX = useMotionValue(Infinity);
