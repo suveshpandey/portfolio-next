@@ -47,7 +47,7 @@ export default function Education() {
                   <TextReveal
                     as="h3"
                     stagger={0.02}
-                    className="text-base font-semibold text-foreground"
+                    className="text-lg font-semibold text-foreground"
                   >
                     {edu.school}
                   </TextReveal>
@@ -63,7 +63,7 @@ export default function Education() {
                 <TextReveal
                   as="span"
                   stagger={0.03}
-                  className="shrink-0 font-mono text-[13px] text-muted-foreground sm:text-right"
+                  className="shrink-0 font-mono text-sm text-muted-foreground sm:text-right"
                 >
                   {edu.duration}
                 </TextReveal>

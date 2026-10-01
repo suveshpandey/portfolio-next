@@ -57,7 +57,7 @@ function ProjectCard({ project }: { project: (typeof PROJECTS)[number] }) {
       <TextReveal
         as="h3"
         stagger={0.04}
-        className="text-base font-semibold text-foreground sm:text-lg"
+        className="text-lg font-semibold text-foreground"
       >
         {project.title}
       </TextReveal>

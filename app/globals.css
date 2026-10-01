@@ -28,8 +28,17 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+  --font-sans: var(--font-vt323), ui-monospace, "SF Mono", monospace;
+  --font-mono: var(--font-vt323), ui-monospace, "SF Mono", monospace;
+  /* VT323 draws small for its point size, so the text scale runs about 25% larger */
+  --text-xs: 1rem;
+  --text-sm: 1.125rem;
+  --text-base: 1.25rem;
+  --text-lg: 1.5rem;
+  --text-lg--line-height: 1.2;
+  --text-xl: 1.75rem;
+  --text-xl--line-height: 1.2;
+  --leading-relaxed: 1.35;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -77,11 +86,26 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
-    font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+    @apply bg-background font-mono text-foreground;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* VT323 ships a single weight: never fake bold or italic */
+    font-synthesis: none;
   }
+  /* Headings share the body face, so size and colour carry the hierarchy */
+  h1,
+  h2,
+  h3 {
+    letter-spacing: 0;
+  }
+}
+
+/* Intro loader: clear itself if hydration never happens */
+.site-loader {
+  animation: site-loader-failsafe 0.4s ease 6s forwards;
+}
+@keyframes site-loader-failsafe {
+  to { opacity: 0; visibility: hidden; }
 }
 
 .section-wrapper {
@@ -113,19 +137,18 @@
   gap: 0.5rem;
 }
 .section-title {
-  font-size: 1.375rem;
+  font-size: 2rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.25;
+  line-height: 1.1;
   color: var(--foreground);
 }
 @media (min-width: 640px) {
-  .section-title { font-size: 1.625rem; }
+  .section-title { font-size: 2.5rem; }
 }
 .section-subtitle {
   color: var(--muted-foreground);
-  font-size: 1rem;
-  line-height: 1.7;
+  font-size: 1.25rem;
+  line-height: 1.5;
   font-weight: 400;
   max-width: 36rem;
 }
@@ -152,8 +175,8 @@
   border-radius: 9999px;
   border: 1px solid var(--border);
   background: color-mix(in oklab, var(--background) 86%, var(--muted));
-  padding: 0.45rem 0.95rem;
-  font-size: 0.85rem;
+  padding: 0.35rem 0.95rem;
+  font-size: 1.125rem;
   font-weight: 500;
   color: var(--foreground);
   transition: border-color 0.2s, background-color 0.2s;
@@ -171,10 +194,9 @@
   border: 1px solid var(--border);
   background: color-mix(in oklab, var(--background) 90%, var(--muted));
   padding: 0.3rem 0.65rem;
-  font-family: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
-  font-size: 0.72rem;
+  font-family: var(--font-vt323), ui-monospace, "SF Mono", monospace;
+  font-size: 1rem;
   font-weight: 500;
-  letter-spacing: -0.01em;
   color: var(--muted-foreground);
 }
 
@@ -200,7 +222,7 @@
 .react-activity-calendar__count {
   color: var(--foreground);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1.125rem;
 }
 
 /* Custom scrollbar - matches theme */

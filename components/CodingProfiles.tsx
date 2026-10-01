@@ -99,7 +99,7 @@ export default function CodingProfiles() {
               <GitHubCalendar
                 username={current.username}
                 year="last"
-                fontSize={14}
+                fontSize={16}
                 colorScheme={themeMode}
                 theme={CALENDAR_THEME}
                 hideColorLegend

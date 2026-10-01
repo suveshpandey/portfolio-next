@@ -18,7 +18,7 @@ export default function HeroSection() {
         <TextReveal
           as="h1"
           stagger={0.05}
-          className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
+          className="text-4xl font-bold text-foreground sm:text-5xl"
         >
           Hi, I&apos;m Suvesh
         </TextReveal>

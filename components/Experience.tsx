@@ -24,8 +24,8 @@ const experiences: ExperienceEntry[] = [
     visiblePoints: 2,
     points: [
       <>
-        Building <span className="font-medium text-foreground">Euron CRM</span> — a
-        multi-tenant B2B CRM (sales pipeline, leads &amp; deals, unified inbox,
+        Building <span className="font-medium text-foreground">Euron CRM</span>{" "}
+        — a multi-tenant B2B CRM (sales pipeline, leads &amp; deals, unified inbox,
         campaigns, payments, calendar) with an in-house{" "}
         <span className="font-medium text-foreground">
           real-time AI voice-calling engine
@@ -130,7 +130,7 @@ function ExperienceItem({ exp, idx }: { exp: ExperienceEntry; idx: number }) {
       <div className="min-w-0 flex-1 pt-0.5">
         <div className="flex flex-col gap-0.5 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
           <div className="min-w-0">
-            <TextReveal as="h3" stagger={0.04} className="text-base font-semibold text-foreground">
+            <TextReveal as="h3" stagger={0.04} className="text-lg font-semibold text-foreground">
               {exp.company}
             </TextReveal>
             <TextReveal as="p" stagger={0.03} delay={0.05} className="text-sm text-muted-foreground">
@@ -140,7 +140,7 @@ function ExperienceItem({ exp, idx }: { exp: ExperienceEntry; idx: number }) {
           <TextReveal
             as="span"
             stagger={0.03}
-            className="shrink-0 font-mono text-[13px] text-muted-foreground sm:text-right"
+            className="shrink-0 font-mono text-sm text-muted-foreground sm:text-right"
           >
             {exp.duration}
           </TextReveal>
