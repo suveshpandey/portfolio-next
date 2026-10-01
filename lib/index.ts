@@ -1,8 +1,13 @@
 /** A bullet on a project card. `label` is the bolded lead-in before the em dash. */
 export type ProjectHighlight = { label?: string; text: string };
 
+/** Finder-style colour tags used to filter projects. */
+export type ProjectTag = "AI" | "Real-time" | "Full-stack";
+
 export const PROJECTS = [
   {
+    name: "InferLoop.AI",
+    tags: ["AI", "Full-stack"] as ProjectTag[],
     title: "InferLoop.AI – Test-Driven AI Companion for Competitive Programming",
     image: "/images/projectsImg/inferloop-ai-img.png",
     description:
@@ -50,6 +55,8 @@ export const PROJECTS = [
     github: "https://github.com/suveshpandey/inferloop-ai-server",
   },
   {
+    name: "CodePilot",
+    tags: ["AI", "Full-stack"] as ProjectTag[],
     title: "CodePilot – AI-Assisted Code Learning Platform",
     image: "/images/projectsImg/code-pilot.png",
     description:
@@ -92,6 +99,8 @@ export const PROJECTS = [
     github: "https://github.com/suveshpandey/CodePilot",
   },
   {
+    name: "Excaliboard",
+    tags: ["Real-time", "Full-stack"] as ProjectTag[],
     title:
       "Excaliboard - Real-time collaborative canvas app (excalidraw.com clone)",
     image: "/images/projectsImg/excaliboard-dashboard.png",
@@ -130,6 +139,8 @@ export const PROJECTS = [
     github: "https://github.com/suveshpandey/excalidraw.com",
   },
   {
+    name: "Talkify",
+    tags: ["Real-time", "Full-stack"] as ProjectTag[],
     title: "Talkify - Real-time chat app",
     image: "/images/projectsImg/tailkify-img.png",
     description:
@@ -153,6 +164,8 @@ export const PROJECTS = [
     github: "https://github.com/suveshpandey/talkify-chat-app",
   },
   {
+    name: "Gemini Clone",
+    tags: ["AI", "Full-stack"] as ProjectTag[],
     title: "Google Gemini Fullstack Clone",
     image: "/images/projectsImg/gemini-clone-img.png",
     description:
@@ -168,6 +181,8 @@ export const PROJECTS = [
     github: "https://github.com/suveshpandey/google-gemini-clone",
   },
   {
+    name: "Neura-Notes",
+    tags: ["Full-stack"] as ProjectTag[],
     title: "Neura-Notes",
     image: "/images/projectsImg/neura-notes-img.png",
     description:
