@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
-import { Mail } from "lucide-react";
+import { Mail, Send } from "lucide-react";
 import { CONTACT } from "@/lib";
 import TextReveal from "@/components/TextReveal";
 
@@ -41,10 +41,20 @@ export default function HeroSection() {
           variants={fadeUp(0.35)}
           initial="hidden"
           animate="visible"
-          className="mt-5 inline-flex items-center gap-2.5 text-sm font-medium text-foreground transition-colors hover:text-muted-foreground sm:text-base"
+          className="group mt-5 inline-flex max-w-full items-center gap-2 rounded-full border border-border bg-black px-3 py-1.5 text-xs text-white sm:gap-2.5 sm:px-4 sm:py-2 sm:text-base"
         >
-          <Mail size={18} className="shrink-0" />
-          {CONTACT.email}
+          {/* Envelope slides up and out on hover while the send icon rises into its place */}
+          <span className="relative h-4 w-4 shrink-0 overflow-hidden">
+            <Mail
+              size={16}
+              className="absolute inset-0 transition-transform duration-300 ease-out group-hover:-translate-y-full group-focus-visible:-translate-y-full"
+            />
+            <Send
+              size={16}
+              className="absolute inset-0 translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0 group-focus-visible:translate-y-0"
+            />
+          </span>
+          <span className="truncate">{CONTACT.email}</span>
         </motion.a>
       </div>
 
