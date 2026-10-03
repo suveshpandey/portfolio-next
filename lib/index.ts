@@ -1,7 +1,66 @@
 /** A bullet on a project card. `label` is the bolded lead-in before the em dash. */
 export type ProjectHighlight = { label?: string; text: string };
 
+/** A source link on a project card, for projects split across several repos. */
+export type ProjectRepo = { label: string; href: string };
+
 export const PROJECTS = [
+  {
+    title: "Intervio.ai – AI Voice Interviewer That Tests Your Resume",
+    status: "In progress",
+    description:
+      "An AI voice interviewer that checks whether you can actually defend what's on your resume. Intervio pulls out the specific claims you made (\u201ccut API latency from 820ms to 190ms\u201d), runs a live spoken interview that presses on each one, and reports which claims you backed up, which you didn't, and what to work on.",
+    highlights: [
+      {
+        label: "Claims, not keywords",
+        text: "Extracts 10–15 checkable claims from a PDF or DOCX resume, ranked by how worth probing they are, and builds a timed interview plan. Non-resume and junk uploads are rejected before any AI spend.",
+      },
+      {
+        label: "Live voice interview",
+        text: "Streaming speech-to-text and text-to-speech over WebSockets, with live captions, end-of-speech detection and three interviewer voices. Asking \u201ccan you repeat that?\u201d repeats or rewords the question without scoring it.",
+      },
+      {
+        label: "The AI doesn't run the interview",
+        text: "The model only scores an answer and writes the next question. Every real decision (follow-up limits, time budgets, when to ease off or move on) is deterministic, unit-tested TypeScript, so each interview is predictable and debuggable.",
+      },
+      {
+        label: "Honest report",
+        text: "Every score is computed in code from the saved transcript; the model only writes the explanation. Each claim is marked backed up, partly backed up, not enough detail or not covered (never counted against you), with quoted answers, a readiness verdict and a top-3 improvement list.",
+      },
+      {
+        label: "Latency",
+        text: "The next-topic question is prepared while the candidate is still answering, removing a second model call on about 40% of turns, with a circuit breaker to a fast fallback model and short spoken lead-ins covering speech generation.",
+      },
+      {
+        label: "Voice reliability",
+        text: "Half-duplex audio so the AI never hears itself, keep-alives and reconnect-on-demand for idle provider sockets, and a 200ms playback pre-buffer to stop choppy starts.",
+      },
+      {
+        label: "Production hardening",
+        text: "Refresh-token rotation with reuse detection, single-use WebSocket tickets, prompt-injection fencing on all untrusted text, magic-byte upload validation, rate limiting and CSRF origin checks, backed by 81 unit tests.",
+      },
+    ] as ProjectHighlight[],
+    technologies: [
+      "Next.js 15",
+      "React 19",
+      "TypeScript",
+      "Express 5",
+      "PostgreSQL",
+      "Prisma",
+      "Redis",
+      "BullMQ",
+      "WebSockets",
+      "Web Audio API",
+      "Google Gemini",
+      "Deepgram",
+      "AWS S3",
+      "Vitest",
+    ],
+    repos: [
+      { label: "Backend", href: "https://github.com/suveshpandey/intervio-backend" },
+      { label: "Frontend", href: "https://github.com/suveshpandey/intervio-frontend" },
+    ],
+  },
   {
     title: "InferLoop.AI – Test-Driven AI Companion for Competitive Programming",
     image: "/images/projectsImg/inferloop-ai-img.png",

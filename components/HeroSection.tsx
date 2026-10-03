@@ -30,8 +30,8 @@ export default function HeroSection() {
           className="mt-3 text-base leading-relaxed text-muted-foreground"
         >
           Building{" "}
-          <span className="font-medium text-foreground">AI-powered products</span> with
-          solid full-stack engineering.
+          <span className="font-medium text-foreground">AI-powered products</span>, from
+          real-time voice agents to the full stack behind them.
         </TextReveal>
 
         <motion.a
@@ -41,7 +41,7 @@ export default function HeroSection() {
           variants={fadeUp(0.35)}
           initial="hidden"
           animate="visible"
-          className="group mt-5 inline-flex max-w-full items-center gap-2 rounded-full border border-border bg-black px-3 py-1.5 text-xs text-white sm:gap-2.5 sm:px-4 sm:py-2 sm:text-base"
+          className="group mt-5 inline-flex max-w-full items-center gap-2 rounded-full border border-border bg-background px-3 py-1.5 text-xs text-foreground sm:gap-2.5 sm:px-4 sm:py-2 sm:text-base"
         >
           {/* Envelope slides up and out on hover while the send icon rises into its place */}
           <span className="relative h-4 w-4 shrink-0 overflow-hidden">

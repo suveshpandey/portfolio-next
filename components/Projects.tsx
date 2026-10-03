@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { PROJECTS, type ProjectHighlight } from "@/lib";
+import { PROJECTS, type ProjectHighlight, type ProjectRepo } from "@/lib";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Globe } from "lucide-react";
 import TextReveal from "@/components/TextReveal";
@@ -45,6 +45,8 @@ function ProjectCard({ project }: { project: (typeof PROJECTS)[number] }) {
   const [expanded, setExpanded] = useState(false);
   const visible = project.highlights.slice(0, VISIBLE_HIGHLIGHTS);
   const hidden = project.highlights.slice(VISIBLE_HIGHLIGHTS);
+  const repos: ProjectRepo[] =
+    project.repos ?? (project.github ? [{ label: "Source", href: project.github }] : []);
 
   return (
     <motion.article
@@ -54,6 +56,15 @@ function ProjectCard({ project }: { project: (typeof PROJECTS)[number] }) {
       transition={{ duration: 0.4 }}
       className="section-card p-5 sm:p-6"
     >
+      {project.status && (
+        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-muted/60 px-2.5 py-0.5 text-xs text-foreground">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber-400" />
+          </span>
+          {project.status}
+        </span>
+      )}
       <TextReveal
         as="h3"
         stagger={0.04}
@@ -131,20 +142,22 @@ function ProjectCard({ project }: { project: (typeof PROJECTS)[number] }) {
             <Tooltip label="Check it live" />
           </div>
         )}
-        {project.github && (
-          <div className="group relative">
+        {repos.map((repo) => (
+          <div key={repo.href} className="group relative">
             <a
-              href={project.github}
+              href={repo.href}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-lg border border-border bg-muted px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-foreground/25"
             >
               <FaGithub size={15} />
-              Source
+              {repo.label}
             </a>
-            <Tooltip label="View source code" />
+            <Tooltip
+              label={repos.length > 1 ? `View ${repo.label.toLowerCase()} code` : "View source code"}
+            />
           </div>
-        )}
+        ))}
       </div>
     </motion.article>
   );

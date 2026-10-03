@@ -24,7 +24,10 @@ export default function AboutSection() {
           real-time AI voice-calling engine
         </span>{" "}
         and an autonomous AI sales agent, alongside an AI healthcare platform and a
-        RAG study assistant used by thousands of students. I work across the stack
+        RAG study assistant used by thousands of students. Outside work, I&apos;m
+        building <span className="font-medium text-foreground">Intervio.ai</span>, an
+        AI voice interviewer that checks whether candidates can actually defend the
+        claims on their resume. I work across the stack
         with <span className="font-medium text-foreground">TypeScript</span>,{" "}
         <span className="font-medium text-foreground">Next.js</span>,{" "}
         <span className="font-medium text-foreground">Node.js</span>,{" "}

@@ -50,7 +50,7 @@ function DockItem({
     <>
       <span
         aria-hidden
-        className="absolute left-1/2 top-1/2 h-9 w-9 -translate-x-1/2 -translate-y-1/2 scale-50 rounded-full bg-muted opacity-0 transition-all duration-200 ease-out group-hover:scale-100 group-hover:opacity-100"
+        className="absolute left-1/2 top-1/2 h-9 w-9 -translate-x-1/2 -translate-y-1/2 scale-50 rounded-full bg-foreground/10 opacity-0 transition-all duration-200 ease-out group-hover:scale-100 group-hover:opacity-100"
       />
       <motion.span style={{ scale: iconScale }} className="relative z-10 flex items-center justify-center">
         {children}
@@ -87,7 +87,7 @@ function DockItem({
           target="_blank"
           rel="noopener noreferrer"
           aria-label={label}
-          className="group relative flex h-full w-full items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+          className="group relative flex h-full w-full items-center justify-center text-foreground/75 transition-colors hover:text-foreground"
         >
           {inner}
         </a>
@@ -96,7 +96,7 @@ function DockItem({
           type="button"
           onClick={onClick}
           aria-label={label}
-          className="group relative flex h-full w-full items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+          className="group relative flex h-full w-full items-center justify-center text-foreground/75 transition-colors hover:text-foreground"
         >
           {inner}
         </button>
@@ -151,7 +151,7 @@ export default function Navbar() {
       <div
         onMouseMove={(e) => mouseX.set(e.clientX)}
         onMouseLeave={() => mouseX.set(Infinity)}
-        className="nav-surface flex items-center gap-1 rounded-full px-2.5 py-1.5"
+        className="nav-surface flex items-center gap-1 rounded-full px-3 py-2 backdrop-blur-xl backdrop-saturate-200"
       >
         {links.map((item) => (
           <DockItem
@@ -165,7 +165,7 @@ export default function Navbar() {
           </DockItem>
         ))}
 
-        <span className="mx-1 h-6 w-px self-center bg-border" />
+        <span className="mx-1 h-6 w-px self-center bg-foreground/15" />
 
         <DockItem mouseX={mouseX} label="Toggle theme" onClick={toggleTheme}>
           {mounted ? (
