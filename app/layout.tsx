@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { VT323 } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Loader from "@/components/Loader";
 
-const vt323 = VT323({ subsets: ["latin"], weight: "400", variable: "--font-vt323" });
+const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
 export const metadata: Metadata = {
   title: "Suvesh Pandey - Full Stack Developer",
@@ -24,16 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d);}catch(e){}})();`,
-          }}
-        />
         <noscript>
           <style dangerouslySetInnerHTML={{ __html: `.site-loader{display:none}` }} />
         </noscript>
       </head>
-      <body className={vt323.variable}>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Loader />
         <SmoothScroll />
         {children}
