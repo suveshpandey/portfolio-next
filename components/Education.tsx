@@ -22,8 +22,12 @@ export default function Education() {
   return (
     <section id="education" className="section-wrapper w-full">
       <div className="section-heading">
-        <TextReveal as="h2" className="section-title">
+        <p className="eyebrow">
+          <span className="status-dot" aria-hidden />
           Education
+        </p>
+        <TextReveal as="h2" className="section-title">
+          Education &amp; foundations.
         </TextReveal>
       </div>
 

@@ -171,7 +171,7 @@ function ExperienceItem({ exp, idx }: { exp: ExperienceEntry; idx: number }) {
               type="button"
               onClick={() => setExpanded((prev) => !prev)}
               aria-expanded={expanded}
-              className="mt-2.5 inline-flex items-center gap-1 text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              className="mt-2.5 inline-flex items-center gap-1 text-[13px] font-medium text-accent transition-colors hover:text-[var(--accent-green-strong)]"
             >
               {expanded ? "Show less" : "Show more"}
               <ChevronDown
@@ -192,8 +192,12 @@ export default function Experience() {
   return (
     <section id="experience" className="section-wrapper w-full">
       <div className="section-heading">
+        <p className="eyebrow">
+          <span className="status-dot" aria-hidden />
+          Experience
+        </p>
         <TextReveal as="h2" stagger={0.05} className="section-title">
-          Work Experience
+          Where I've worked.
         </TextReveal>
       </div>
 

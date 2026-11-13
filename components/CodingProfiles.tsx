@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import GitHubCalendar from "react-github-calendar";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
@@ -10,33 +10,17 @@ const GITHUB_ACCOUNTS = [
   { id: "work" as const, username: "suvesheuron", label: "Work (Euron)" },
 ];
 
+// Forest-green calendar scale to match the theme accent
 const CALENDAR_THEME = {
-  light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
-  dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
+  light: ["#e6ebe0", "#c0dfac", "#8fc072", "#5f9247", "#466b38"],
+  dark: ["#e6ebe0", "#c0dfac", "#8fc072", "#5f9247", "#466b38"],
 };
 
-function useThemeMode() {
-  const [mode, setMode] = useState<"light" | "dark">("dark");
-
-  useEffect(() => {
-    const read = () =>
-      setMode(document.documentElement.classList.contains("dark") ? "dark" : "light");
-    read();
-    const observer = new MutationObserver(read);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-    return () => observer.disconnect();
-  }, []);
-
-  return mode;
-}
+const themeMode = "light" as const;
 
 export default function CodingProfiles() {
   const [githubAccount, setGithubAccount] = useState<"personal" | "work">("personal");
   const current = GITHUB_ACCOUNTS.find((a) => a.id === githubAccount) ?? GITHUB_ACCOUNTS[0];
-  const themeMode = useThemeMode();
 
   return (
     <div id="coding-profiles" className="section-wrapper w-full">
@@ -47,8 +31,12 @@ export default function CodingProfiles() {
         transition={{ duration: 0.5 }}
         className="section-heading"
       >
+        <p className="eyebrow">
+          <span className="status-dot" aria-hidden />
+          Activity
+        </p>
         <TextReveal as="h2" stagger={0.05} className="section-title">
-          Coding Activity
+          Coding activity.
         </TextReveal>
       </motion.div>
 

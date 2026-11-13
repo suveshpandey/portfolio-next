@@ -1,12 +1,17 @@
 "use client";
 import TextReveal from "@/components/TextReveal";
+import { CONTACT } from "@/lib";
 
 export default function AboutSection() {
   return (
     <section id="about" className="section-wrapper w-full">
       <div className="section-heading">
-        <TextReveal as="h2" className="section-title">
+        <p className="eyebrow">
+          <span className="status-dot" aria-hidden />
           About
+        </p>
+        <TextReveal as="h2" className="section-title">
+          Building AI products that hold up in production.
         </TextReveal>
       </div>
 
@@ -14,7 +19,7 @@ export default function AboutSection() {
         as="p"
         delay={0.08}
         stagger={0.012}
-        className="text-base leading-relaxed text-muted-foreground"
+        className="max-w-[640px] text-[15px] leading-[1.9] text-muted-foreground"
       >
         I&apos;m a software engineer focused on building{" "}
         <span className="font-medium text-foreground">AI-powered products</span>. At{" "}
@@ -35,6 +40,15 @@ export default function AboutSection() {
         <span className="font-medium text-foreground">AWS</span>, and care
         about clean architecture and shipping things that actually work.
       </TextReveal>
+
+      <a
+        href={CONTACT.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="link-underline mt-7 inline-flex text-[13px] text-foreground"
+      >
+        Connect on LinkedIn ↗
+      </a>
     </section>
   );
 }

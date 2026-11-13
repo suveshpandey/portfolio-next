@@ -1,132 +1,165 @@
 "use client";
-import { CONTACT } from "@/lib";
-import { motion } from "framer-motion";
-import { Mail, Send, Copy, Check, MapPin, Phone, ArrowUp } from "lucide-react";
-import TextReveal from "@/components/TextReveal";
 import { useState } from "react";
+import { motion } from "motion/react";
+import { CONTACT } from "@/lib";
+import { getLenis } from "@/lib/lenis";
+import TextReveal from "@/components/TextReveal";
 
-function CopyIcon({ copied }: { copied: boolean }) {
-  return copied ? (
-    <Check size={15} className="shrink-0 text-green-500" />
-  ) : (
-    <Copy size={15} className="shrink-0 text-muted-foreground" />
-  );
-}
+const external = { target: "_blank", rel: "noopener noreferrer" } as const;
 
 export default function Contact() {
-  const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [copied, setCopied] = useState<"email" | "phone" | null>(null);
 
-  const copyToClipboard = (text: string, field: string) => {
+  const copy = (text: string, field: "email" | "phone") => {
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        setCopiedField(field);
-        setTimeout(() => setCopiedField(null), 2000);
+        setCopied(field);
+        setTimeout(() => setCopied((c) => (c === field ? null : c)), 2000);
       })
       .catch(() => {});
   };
 
-  const openEmail = () => {
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT.email}`, "_blank");
-  };
-
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
-
   const phone = `+91 ${CONTACT.phoneNo}`;
+  const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT.email}`;
+
+  const rows: { label: string; value: React.ReactNode }[] = [
+    {
+      label: "Phone",
+      value: (
+        <span className="flex items-center justify-between gap-4">
+          <span>{phone}</span>
+          <button
+            type="button"
+            onClick={() => copy(phone, "phone")}
+            className="link-underline text-[13px] text-muted-foreground"
+          >
+            {copied === "phone" ? "Copied" : "Copy"}
+          </button>
+        </span>
+      ),
+    },
+    { label: "Based in", value: "India, open to remote" },
+    {
+      label: "Elsewhere",
+      value: (
+        <span className="flex flex-wrap gap-x-5 gap-y-1">
+          <a href={CONTACT.github} {...external} className="link-underline">
+            GitHub ↗
+          </a>
+          <a href={CONTACT.linkedin} {...external} className="link-underline">
+            LinkedIn ↗
+          </a>
+          <a href={CONTACT.twitter} {...external} className="link-underline">
+            X ↗
+          </a>
+        </span>
+      ),
+    },
+    {
+      label: "Resume",
+      value: (
+        <span className="flex flex-wrap gap-x-5 gap-y-1">
+          <a href={CONTACT.resume} {...external} className="link-underline">
+            View on Drive ↗
+          </a>
+          <a
+            href="/suvesh_resume.pdf"
+            download="Suvesh_Pandey_Resume.pdf"
+            className="link-underline"
+          >
+            Download PDF ↓
+          </a>
+        </span>
+      ),
+    },
+  ];
 
   return (
     <section id="contact" className="section-wrapper w-full">
-      <div className="section-heading">
-        <TextReveal as="h2" stagger={0.05} className="section-title">
-          Get in touch
-        </TextReveal>
-        <TextReveal as="p" delay={0.08} stagger={0.015} className="section-subtitle">
-          I&apos;m open to new roles and interesting AI / full-stack projects. The fastest
-          way to reach me is email.
-        </TextReveal>
-      </div>
-
-      <motion.div
-        whileInView={{ opacity: 1, y: 0 }}
-        initial={{ opacity: 0, y: 24 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.5 }}
-        className="section-card w-full p-5 sm:p-8"
-      >
-        <div className="flex w-full items-center justify-center gap-2.5 rounded-full border border-border bg-muted/60 px-3.5 py-2.5 sm:w-fit sm:justify-start sm:py-1.5">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-          </span>
-          <TextReveal as="span" stagger={0.025} className="text-xs font-medium text-foreground">
-            Available for full-time &amp; remote roles
+      <div className="grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+        {/* Left: the ask */}
+        <div>
+          <p className="eyebrow mb-6">
+            <span className="status-dot" aria-hidden />
+            Available for work
+          </p>
+          <TextReveal
+            as="h2"
+            stagger={0.05}
+            className="text-[clamp(2.6rem,5.6vw,4.75rem)] font-medium leading-[1.04] tracking-[-0.05em] text-foreground"
+          >
+            Let&apos;s build <span className="text-accent">something.</span>
+          </TextReveal>
+          <TextReveal
+            as="p"
+            delay={0.1}
+            stagger={0.02}
+            className="mt-7 max-w-[440px] text-base leading-[1.75] text-muted-foreground"
+          >
+            I&apos;m open to full-time and remote roles, and to interesting AI and
+            full-stack projects. Email is the fastest way to reach me.
           </TextReveal>
         </div>
 
-        <div className="mt-6 flex gap-3">
-          <button
-            type="button"
-            onClick={openEmail}
-            className="group flex min-w-0 flex-1 items-center justify-center gap-2.5 rounded-xl bg-foreground px-4 py-4 text-sm font-semibold text-background transition-opacity hover:opacity-90 sm:px-6 sm:text-base"
+        {/* Right: the details */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5 }}
+          className="lg:pt-2"
+        >
+          <a
+            href={mailto}
+            {...external}
+            className="group flex items-center justify-between gap-4 border-b border-foreground pb-5 text-[clamp(1.15rem,2.3vw,1.7rem)] font-medium tracking-[-0.02em] text-foreground transition-colors hover:text-accent hover:border-accent"
           >
-            {/* Envelope slides up and out on hover while the send icon rises into its place */}
-            <span className="relative h-[18px] w-[18px] shrink-0 overflow-hidden">
-              <Mail
-                size={18}
-                className="absolute inset-0 transition-transform duration-300 ease-out group-hover:-translate-y-full group-focus-visible:-translate-y-full"
-              />
-              <Send
-                size={18}
-                className="absolute inset-0 translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0 group-focus-visible:translate-y-0"
-              />
+            <span className="min-w-0 break-all">{CONTACT.email}</span>
+            <span
+              aria-hidden
+              className="shrink-0 text-[1.4em] leading-none transition-transform duration-300 ease-out group-hover:-translate-y-1 group-hover:translate-x-1"
+            >
+              ↗
             </span>
-            <TextReveal as="span" delay={0.1} className="truncate">
-              {CONTACT.email}
-            </TextReveal>
-          </button>
+          </a>
           <button
             type="button"
-            onClick={() => copyToClipboard(CONTACT.email, "email")}
-            aria-label="Copy email address"
-            className="flex w-14 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-border bg-background/40 transition-colors hover:border-foreground/25"
+            onClick={() => copy(CONTACT.email, "email")}
+            className="link-underline mt-3 text-[13px] text-muted-foreground"
           >
-            <CopyIcon copied={copiedField === "email"} />
+            {copied === "email" ? "Copied to clipboard" : "Copy email address"}
           </button>
-        </div>
+          <span className="sr-only" aria-live="polite">
+            {copied ? "Copied to clipboard" : ""}
+          </span>
 
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          <button
-            type="button"
-            onClick={() => copyToClipboard(phone, "phone")}
-            className="flex cursor-pointer items-center justify-between rounded-xl border border-border bg-background/40 px-4 py-3 text-left transition-colors hover:border-foreground/25"
-          >
-            <span className="flex min-w-0 items-center gap-2.5">
-              <Phone size={16} className="shrink-0 text-muted-foreground" />
-              <TextReveal as="span" stagger={0.03} className="truncate text-sm text-foreground">
-                {phone}
-              </TextReveal>
-            </span>
-            <CopyIcon copied={copiedField === "phone"} />
-          </button>
+          <dl className="mt-10 border-t border-border text-[15px]">
+            {rows.map((row) => (
+              <div
+                key={row.label}
+                className="grid grid-cols-[96px_1fr] items-baseline gap-4 border-b border-border py-4"
+              >
+                <dt className="text-[13px] text-muted-foreground">{row.label}</dt>
+                <dd className="min-w-0 text-foreground">{row.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </motion.div>
+      </div>
 
-          <div className="flex items-center gap-2.5 rounded-xl border border-border bg-background/40 px-4 py-3">
-            <MapPin size={16} className="shrink-0 text-muted-foreground" />
-            <TextReveal as="span" stagger={0.03} className="truncate text-sm text-foreground">
-              India · Open to remote
-            </TextReveal>
-          </div>
-        </div>
-      </motion.div>
-
-      <footer className="mt-12 flex w-full flex-col items-center justify-between gap-3 border-t border-dashed border-border pt-6 text-sm text-muted-foreground sm:flex-row">
-        <p>© {new Date().getFullYear()} · Suvesh Pandey</p>
+      <footer className="mt-20 flex w-full flex-col items-start justify-between gap-3 border-t border-border pt-6 text-[13px] text-muted-foreground sm:flex-row sm:items-center">
+        <p>© {new Date().getFullYear()} Suvesh Pandey</p>
         <button
           type="button"
-          onClick={scrollToTop}
-          className="group inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+          onClick={() => {
+            const lenis = getLenis();
+            if (lenis) lenis.scrollTo(0, { duration: 1.4 });
+            else window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="link-underline inline-flex items-center gap-1.5"
         >
-          Back to top
-          <ArrowUp size={14} className="transition-transform duration-200 group-hover:-translate-y-0.5" />
+          Back to top <span aria-hidden>↑</span>
         </button>
       </footer>
     </section>

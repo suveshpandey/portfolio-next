@@ -10,14 +10,9 @@ import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
-    <div className="h-auto overflow-x-hidden overflow-auto pb-24 text-muted-foreground antialiased lg:pb-0">
-      <div className="fixed top-0 -z-10 h-full w-full">
-        <div className="absolute inset-0 z-[-2] bg-background" />
-        <div className="absolute inset-0 z-[-1] bg-[radial-gradient(ellipse_70%_40%_at_50%_-10%,oklch(0.4_0.004_255_/_.10),transparent_70%)]" />
-      </div>
-
+    <div className="min-h-screen overflow-x-clip bg-background text-foreground antialiased">
       <Navbar />
-      <div className="relative mx-auto w-full max-w-2xl px-5 sm:px-6">
+      <main className="relative mx-auto w-full max-w-[1240px] px-5 sm:px-8 lg:px-[34px]">
         <HeroSection />
         <AboutSection />
         <Experience />
@@ -26,7 +21,7 @@ export default function Home() {
         <Projects />
         <CodingProfiles />
         <Contact />
-      </div>
+      </main>
     </div>
   );
 }
