@@ -10,7 +10,7 @@ import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-background text-foreground antialiased">
+    <div className="min-h-screen overflow-x-clip bg-background text-foreground antialiased">
       <Navbar />
       <main className="relative mx-auto w-full max-w-[1240px] px-5 sm:px-8 lg:px-[34px]">
         <HeroSection />
