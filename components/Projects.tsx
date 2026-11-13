@@ -57,10 +57,10 @@ function ProjectCard({ project }: { project: (typeof PROJECTS)[number] }) {
       className="section-card p-5 sm:p-6"
     >
       {project.status && (
-        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-muted/60 px-2.5 py-0.5 text-xs text-foreground">
+        <span className="mono mb-3 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.12em] text-[#45643a]">
           <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber-400" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
           </span>
           {project.status}
         </span>
@@ -68,7 +68,7 @@ function ProjectCard({ project }: { project: (typeof PROJECTS)[number] }) {
       <TextReveal
         as="h3"
         stagger={0.04}
-        className="text-lg font-semibold text-foreground"
+        className="text-xl font-medium tracking-[-0.01em] text-foreground sm:text-2xl"
       >
         {project.title}
       </TextReveal>
@@ -76,7 +76,7 @@ function ProjectCard({ project }: { project: (typeof PROJECTS)[number] }) {
         as="p"
         stagger={0.008}
         delay={0.06}
-        className="mt-2 text-sm leading-relaxed text-muted-foreground"
+        className="mt-3 text-[14px] leading-[1.75] text-muted-foreground"
       >
         {project.description}
       </TextReveal>
@@ -106,7 +106,7 @@ function ProjectCard({ project }: { project: (typeof PROJECTS)[number] }) {
             type="button"
             onClick={() => setExpanded((prev) => !prev)}
             aria-expanded={expanded}
-            className="mt-2.5 inline-flex items-center gap-1 text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+            className="mt-2.5 inline-flex items-center gap-1 text-[13px] font-medium text-accent transition-colors hover:text-[var(--accent-green-strong)]"
           >
             {expanded ? "Show less" : "Show more"}
             <ChevronDown
@@ -167,8 +167,12 @@ export default function Projects() {
   return (
     <section id="projects" className="section-wrapper w-full">
       <div className="section-heading">
-        <TextReveal as="h2" className="section-title">
+        <p className="eyebrow">
+          <span className="status-dot" aria-hidden />
           Projects
+        </p>
+        <TextReveal as="h2" className="section-title">
+          Things I&apos;ve built, end to end.
         </TextReveal>
         <TextReveal as="p" delay={0.08} stagger={0.015} className="section-subtitle">
           A selection of AI and full-stack apps I&apos;ve built, with the stack used and

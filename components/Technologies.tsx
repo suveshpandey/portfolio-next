@@ -46,8 +46,12 @@ export default function Technologies() {
   return (
     <section id="technologies" className="section-wrapper w-full">
       <div className="section-heading">
+        <p className="eyebrow">
+          <span className="status-dot" aria-hidden />
+          Working stack
+        </p>
         <TextReveal as="h2" className="section-title">
-          Skills
+          Tools I reach for.
         </TextReveal>
       </div>
 
@@ -55,10 +59,10 @@ export default function Technologies() {
         {skillGroups.map((group, idx) => (
           <div
             key={group.label}
-            className="flex flex-col gap-3 border-t border-dashed border-border py-5 first:border-t-0 first:pt-0 last:pb-0 sm:flex-row sm:gap-4"
+            className="flex flex-col gap-3 border-t border-border py-6 first:border-t-0 first:pt-0 last:pb-0 sm:flex-row sm:gap-6"
           >
-            <h3 className="flex shrink-0 items-baseline gap-3 text-sm uppercase tracking-wider text-muted-foreground sm:w-44 sm:pt-1.5">
-              <span aria-hidden className="text-muted-foreground/50">
+            <h3 className="mono flex shrink-0 items-baseline gap-3 text-[11px] uppercase tracking-[0.12em] text-muted-foreground sm:w-48 sm:pt-1.5">
+              <span aria-hidden className="text-accent">
                 {String(idx + 1).padStart(2, "0")}
               </span>
               {group.label}

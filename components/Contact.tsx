@@ -7,7 +7,7 @@ import { useState } from "react";
 
 function CopyIcon({ copied }: { copied: boolean }) {
   return copied ? (
-    <Check size={15} className="shrink-0 text-green-500" />
+    <Check size={15} className="shrink-0 text-accent" />
   ) : (
     <Copy size={15} className="shrink-0 text-muted-foreground" />
   );
@@ -37,8 +37,12 @@ export default function Contact() {
   return (
     <section id="contact" className="section-wrapper w-full">
       <div className="section-heading">
+        <p className="eyebrow">
+          <span className="status-dot" aria-hidden />
+          Available for work
+        </p>
         <TextReveal as="h2" stagger={0.05} className="section-title">
-          Get in touch
+          Let&apos;s build something.
         </TextReveal>
         <TextReveal as="p" delay={0.08} stagger={0.015} className="section-subtitle">
           I&apos;m open to new roles and interesting AI / full-stack projects. The fastest
@@ -55,8 +59,8 @@ export default function Contact() {
       >
         <div className="flex w-full items-center justify-center gap-2.5 rounded-full border border-border bg-muted/60 px-3.5 py-2.5 sm:w-fit sm:justify-start sm:py-1.5">
           <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
           </span>
           <TextReveal as="span" stagger={0.025} className="text-xs font-medium text-foreground">
             Available for full-time &amp; remote roles
@@ -118,8 +122,8 @@ export default function Contact() {
         </div>
       </motion.div>
 
-      <footer className="mt-12 flex w-full flex-col items-center justify-between gap-3 border-t border-dashed border-border pt-6 text-sm text-muted-foreground sm:flex-row">
-        <p>© {new Date().getFullYear()} · Suvesh Pandey</p>
+      <footer className="mt-12 flex w-full flex-col items-center justify-between gap-3 border-t border-border pt-6 text-[13px] text-muted-foreground sm:flex-row">
+        <p>© {new Date().getFullYear()} · Suvesh Pandey · Built with care.</p>
         <button
           type="button"
           onClick={scrollToTop}
