@@ -191,16 +191,6 @@ function ExperienceItem({ exp, idx }: { exp: ExperienceEntry; idx: number }) {
 export default function Experience() {
   return (
     <section id="experience" className="section-wrapper w-full">
-      <div className="section-heading">
-        <p className="eyebrow">
-          <span className="status-dot" aria-hidden />
-          Experience
-        </p>
-        <TextReveal as="h2" stagger={0.05} className="section-title">
-          Where I've worked.
-        </TextReveal>
-      </div>
-
       <div className="relative flex w-full flex-col gap-7">
         <span
           aria-hidden
