@@ -21,16 +21,6 @@ const education = [
 export default function Education() {
   return (
     <section id="education" className="section-wrapper w-full">
-      <div className="section-heading">
-        <p className="eyebrow">
-          <span className="status-dot" aria-hidden />
-          Education
-        </p>
-        <TextReveal as="h2" className="section-title">
-          Education &amp; foundations.
-        </TextReveal>
-      </div>
-
       <div className="relative flex w-full flex-col gap-7">
         <span aria-hidden className="absolute left-[21px] top-6 bottom-6 w-px bg-border" />
         {education.map((edu, idx) => (

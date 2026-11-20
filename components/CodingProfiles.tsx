@@ -3,17 +3,16 @@ import { useState } from "react";
 import GitHubCalendar from "react-github-calendar";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
-import TextReveal from "@/components/TextReveal";
 
 const GITHUB_ACCOUNTS = [
   { id: "personal" as const, username: "suveshpandey", label: "Personal" },
   { id: "work" as const, username: "suvesheuron", label: "Work (Euron)" },
 ];
 
-// Forest-green calendar scale to match the theme accent
+// Lavender calendar scale to match the theme accent
 const CALENDAR_THEME = {
-  light: ["#e6ebe0", "#c0dfac", "#8fc072", "#5f9247", "#466b38"],
-  dark: ["#e6ebe0", "#c0dfac", "#8fc072", "#5f9247", "#466b38"],
+  light: ["#ebe6f6", "#d3c9f5", "#b0a0ee", "#8870e0", "#5b43c9"],
+  dark: ["#ebe6f6", "#d3c9f5", "#b0a0ee", "#8870e0", "#5b43c9"],
 };
 
 const themeMode = "light" as const;
@@ -24,22 +23,6 @@ export default function CodingProfiles() {
 
   return (
     <div id="coding-profiles" className="section-wrapper w-full">
-      <motion.div
-        whileInView={{ opacity: 1, y: 0 }}
-        initial={{ opacity: 0, y: 24 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.5 }}
-        className="section-heading"
-      >
-        <p className="eyebrow">
-          <span className="status-dot" aria-hidden />
-          Activity
-        </p>
-        <TextReveal as="h2" stagger={0.05} className="section-title">
-          Coding activity.
-        </TextReveal>
-      </motion.div>
-
       {/* GitHub Card */}
       <motion.div
         whileInView={{ opacity: 1, y: 0 }}

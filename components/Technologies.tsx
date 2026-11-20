@@ -1,6 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
-import TextReveal from "@/components/TextReveal";
+import { motion } from "motion/react";
 
 const skillGroups = [
   { label: "Languages", skills: ["C++", "JavaScript", "TypeScript", "Python"] },
@@ -33,38 +32,21 @@ const skillGroups = [
   },
   {
     label: "Cloud & Tools",
-    skills: [
-      "AWS (S3, EC2, SQS, SES)",
-      "Vercel Sandbox",
-      "Docker",
-      "Git",
-    ],
+    skills: ["AWS (S3, EC2, SQS, SES)", "Vercel Sandbox", "Docker", "Git"],
   },
 ];
 
 export default function Technologies() {
   return (
     <section id="technologies" className="section-wrapper w-full">
-      <div className="section-heading">
-        <p className="eyebrow">
-          <span className="status-dot" aria-hidden />
-          Working stack
-        </p>
-        <TextReveal as="h2" className="section-title">
-          Tools I reach for.
-        </TextReveal>
-      </div>
-
-      <div className="flex flex-col">
-        {skillGroups.map((group, idx) => (
+      {/* A label column on the left, the pills on the right, a hairline between rows */}
+      <div className="divide-y divide-border">
+        {skillGroups.map((group) => (
           <div
             key={group.label}
-            className="flex flex-col gap-3 border-t border-border py-6 first:border-t-0 first:pt-0 last:pb-0 sm:flex-row sm:gap-6"
+            className="grid gap-3 py-5 first:pt-0 last:pb-0 sm:grid-cols-[168px_1fr] sm:gap-6 sm:py-6 sm:first:pt-0 sm:last:pb-0"
           >
-            <h3 className="mono flex shrink-0 items-baseline gap-3 text-[11px] uppercase tracking-[0.12em] text-muted-foreground sm:w-48 sm:pt-1.5">
-              <span aria-hidden className="text-accent">
-                {String(idx + 1).padStart(2, "0")}
-              </span>
+            <h3 className="text-[14px] font-semibold tracking-[-0.01em] text-foreground sm:pt-1.5">
               {group.label}
             </h3>
             <ul className="flex flex-wrap gap-2">

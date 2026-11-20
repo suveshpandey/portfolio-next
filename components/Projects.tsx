@@ -13,7 +13,6 @@ import {
   type MotionValue,
 } from "motion/react";
 import { ChevronDown, Globe } from "lucide-react";
-import TextReveal from "@/components/TextReveal";
 import { FaGithub } from "react-icons/fa";
 
 type Project = (typeof PROJECTS)[number];
@@ -28,6 +27,14 @@ const SCROLL_PER_CARD = 95;
 const SNAP_IDLE = 130;
 /** How far past a card (0–1) you must scroll for it to commit to the next one */
 const SNAP_COMMIT = 0.15;
+/** Touch: page scroll per px of finger travel while dragging a card */
+const TOUCH_GAIN = 1.8;
+/** Touch: fraction of a card you must drag to commit to the next one */
+const TOUCH_COMMIT = 0.25;
+/** Touch: finger speed (px/ms) that counts as a flick */
+const TOUCH_FLICK = 0.35;
+/** Touch: how long the card-to-card settle animation takes (ms) */
+const TOUCH_SETTLE_MS = 520;
 
 const clamp = (v: number, min = 0, max = 1) => Math.min(Math.max(v, min), max);
 const easeInOutCubic = (t: number) =>
@@ -129,7 +136,7 @@ function ProjectBody({
               {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
             </span>
             {project.status && (
-              <span className="inline-flex items-center gap-2 text-[#45643a]">
+              <span className="inline-flex items-center gap-2 text-accent">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
@@ -297,13 +304,13 @@ function StackLayer({
           willChange: "transform, opacity",
           backfaceVisibility: "hidden",
         }}
-        className="relative h-full overflow-hidden rounded-2xl border border-border bg-card shadow-[0_30px_60px_-30px_rgba(32,39,31,0.35)]"
+        className="relative h-full overflow-hidden rounded-[1.75rem] border border-white bg-[var(--card-solid)] shadow-[0_30px_70px_-30px_rgba(70,50,150,0.45)]"
       >
         <ProjectBody project={project} index={i} total={total} fill />
         <motion.span
           aria-hidden
           style={{ opacity: veil }}
-          className="pointer-events-none absolute inset-0 z-10 bg-card"
+          className="pointer-events-none absolute inset-0 z-10 bg-[var(--card-solid)]"
         />
       </motion.article>
     </motion.div>
@@ -327,14 +334,166 @@ function ProjectStack() {
   });
   const f = useTransform(smooth, [0, 1], [0, total - 1]);
 
-  // Magnetic snap: once scrolling stops, settle on a card. A small push past a card commits to the next.
+  // Touch devices: native fling momentum can carry a single swipe across several cards, and a JS snap
+  // fights that momentum. So inside the pinned stack the finger drives the page directly, clamped to one
+  // card either way, and releasing commits to the next card or eases back. Momentum never starts, so one
+  // swipe moves exactly one card. Scrolling a card's own content, swiping out past the first or last card,
+  // and horizontal swipes are all left to the browser.
+  const [isTouch, setIsTouch] = useState(false);
+  const gesture = useRef({ touching: false, active: false });
+  const tweenRaf = useRef(0);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: coarse)");
+    const update = () => setIsTouch(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!isTouch || !track) return;
+
+    const g = gesture.current;
+    const geometry = () => {
+      const start = track.getBoundingClientRect().top + window.scrollY;
+      const step = (track.offsetHeight - window.innerHeight) / (total - 1);
+      return { start, step };
+    };
+    const scrollNow = (y: number) => window.scrollTo({ top: y, behavior: "instant" });
+    const tweenTo = (to: number) => {
+      cancelAnimationFrame(tweenRaf.current);
+      const from = window.scrollY;
+      const t0 = performance.now();
+      const tick = (now: number) => {
+        const t = clamp((now - t0) / TOUCH_SETTLE_MS);
+        scrollNow(from + (to - from) * easeInOutCubic(t));
+        if (t < 1) tweenRaf.current = requestAnimationFrame(tick);
+        else g.active = false;
+      };
+      tweenRaf.current = requestAnimationFrame(tick);
+    };
+
+    type Mode = "idle" | "undecided" | "native" | "drag";
+    let mode: Mode = "idle";
+    let startX = 0;
+    let startY = 0;
+    let startScroll = 0;
+    let lastY = 0;
+    let lastT = 0;
+    let velocity = 0; // finger px/ms; negative = finger moving up = going to the next card
+    let index = 0;
+    let lo = 0;
+    let hi = 0;
+    let inner: HTMLElement | null = null;
+
+    const onStart = (e: TouchEvent) => {
+      cancelAnimationFrame(tweenRaf.current);
+      g.touching = true;
+      g.active = false;
+      if (e.touches.length !== 1) {
+        mode = "native";
+        return;
+      }
+      const t = e.touches[0];
+      startX = t.clientX;
+      startY = lastY = t.clientY;
+      lastT = performance.now();
+      velocity = 0;
+
+      const { start, step } = geometry();
+      const y = window.scrollY;
+      const pinned = y >= start - 2 && y <= start + step * (total - 1) + 2;
+      if (!pinned) {
+        mode = "native";
+        return;
+      }
+      index = clamp(Math.round((y - start) / step), 0, total - 1);
+      startScroll = y;
+      inner = (e.target as Element).closest<HTMLElement>("[data-lenis-prevent]");
+      mode = "undecided";
+    };
+
+    const onMove = (e: TouchEvent) => {
+      if (mode === "idle" || mode === "native") return;
+      const t = e.touches[0];
+      const dy = t.clientY - startY;
+      const dx = t.clientX - startX;
+
+      if (mode === "undecided") {
+        if (Math.abs(dy) < 6 && Math.abs(dx) < 6) return;
+        if (Math.abs(dx) > Math.abs(dy)) {
+          mode = "native";
+          return;
+        }
+        const dir = dy < 0 ? 1 : -1;
+        // Leaving the stack at either end is a normal scroll
+        if ((dir === 1 && index === total - 1) || (dir === -1 && index === 0)) {
+          mode = "native";
+          return;
+        }
+        // A card's own content scrolls first, while it still can in this direction
+        if (inner) {
+          const canScroll =
+            dir === 1 ? inner.scrollTop + inner.clientHeight < inner.scrollHeight - 1 : inner.scrollTop > 1;
+          if (canScroll) {
+            mode = "native";
+            return;
+          }
+        }
+        const { start, step } = geometry();
+        lo = start + step * Math.max(index - 1, 0);
+        hi = start + step * Math.min(index + 1, total - 1);
+        mode = "drag";
+        g.active = true;
+      }
+
+      // drag
+      if (e.cancelable) e.preventDefault();
+      scrollNow(clamp(startScroll - dy * TOUCH_GAIN, lo, hi));
+      const now = performance.now();
+      if (now > lastT) velocity = (t.clientY - lastY) / (now - lastT);
+      lastY = t.clientY;
+      lastT = now;
+    };
+
+    const onEnd = () => {
+      g.touching = false;
+      if (mode === "drag") {
+        const { start, step } = geometry();
+        const moved = window.scrollY - startScroll;
+        let target = index;
+        if (Math.abs(velocity) > TOUCH_FLICK) target = index + (velocity < 0 ? 1 : -1);
+        else if (Math.abs(moved) > step * TOUCH_COMMIT) target = index + (moved > 0 ? 1 : -1);
+        target = clamp(target, 0, total - 1);
+        tweenTo(start + step * target);
+      }
+      mode = "idle";
+    };
+
+    track.addEventListener("touchstart", onStart, { passive: true });
+    track.addEventListener("touchmove", onMove, { passive: false });
+    track.addEventListener("touchend", onEnd, { passive: true });
+    track.addEventListener("touchcancel", onEnd, { passive: true });
+    return () => {
+      cancelAnimationFrame(tweenRaf.current);
+      track.removeEventListener("touchstart", onStart);
+      track.removeEventListener("touchmove", onMove);
+      track.removeEventListener("touchend", onEnd);
+      track.removeEventListener("touchcancel", onEnd);
+    };
+  }, [isTouch, total]);
+
+  // Magnetic snap (pointer devices): once scrolling stops, settle on a card. A small push past a card commits to the next.
   const lastF = useRef(0);
   const direction = useRef<1 | -1>(1);
   const idleTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const settle = () => {
     const track = trackRef.current;
-    if (!track) return;
+    // Never while a finger or the card-to-card animation owns the scroll
+    if (!track || gesture.current.touching || gesture.current.active) return;
     const p = scrollYProgress.get();
     if (p <= 0 || p >= 1) return;
 
@@ -368,7 +527,7 @@ function ProjectStack() {
   return (
     <div
       ref={trackRef}
-      className="relative"
+      className="relative lg:-mx-24"
       style={{ height: `calc(100svh + ${(total - 1) * SCROLL_PER_CARD}svh)` }}
     >
       <div className="sticky top-[72px] flex h-[calc(100svh-72px)] items-center">
@@ -403,20 +562,6 @@ export default function Projects() {
   const reduceMotion = useReducedMotion();
   return (
     <section id="projects" className="section-wrapper w-full">
-      <div className="section-heading">
-        <p className="eyebrow">
-          <span className="status-dot" aria-hidden />
-          Projects
-        </p>
-        <TextReveal as="h2" className="section-title">
-          Things I&apos;ve built, end to end.
-        </TextReveal>
-        <TextReveal as="p" delay={0.08} stagger={0.015} className="section-subtitle">
-          A selection of AI and full-stack apps I&apos;ve built, with the stack used and
-          links to live demos or source.
-        </TextReveal>
-      </div>
-
       {reduceMotion ? <ProjectList /> : <ProjectStack />}
     </section>
   );
