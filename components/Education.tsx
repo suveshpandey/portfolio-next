@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { GraduationCap } from "lucide-react";
 import TextReveal from "@/components/TextReveal";
+import SectionHeader from "@/components/SectionHeader";
 
 const education = [
   {
@@ -21,6 +22,8 @@ const education = [
 export default function Education() {
   return (
     <section id="education" className="section-wrapper w-full">
+      <SectionHeader title="Education" />
+
       <div className="relative flex w-full flex-col gap-7">
         <span aria-hidden className="absolute left-[21px] top-6 bottom-6 w-px bg-border" />
         {education.map((edu, idx) => (

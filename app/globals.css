@@ -311,23 +311,6 @@
   background: var(--glass-strong);
 }
 
-/* Soft float / blink used by the hero illustration */
-@keyframes float-soft {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-@keyframes blink-caret {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-@keyframes drift {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(10px); }
-}
-.float-soft { animation: float-soft 5s ease-in-out infinite; }
-.blink-caret { animation: blink-caret 1.1s steps(1) infinite; }
-.drift { animation: drift 9s ease-in-out infinite; }
-
 /* GitHub calendar (react-activity-calendar) - highlight total contributions count */
 .react-activity-calendar__count {
   color: var(--foreground);
@@ -345,5 +328,4 @@
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .float-soft, .blink-caret, .drift { animation: none; }
 }

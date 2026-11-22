@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "motion/react";
+import SectionHeader from "@/components/SectionHeader";
 
 const skillGroups = [
   { label: "Languages", skills: ["C++", "JavaScript", "TypeScript", "Python"] },
@@ -39,6 +40,8 @@ const skillGroups = [
 export default function Technologies() {
   return (
     <section id="technologies" className="section-wrapper w-full">
+      <SectionHeader title="Skills" />
+
       {/* A label column on the left, the pills on the right, a hairline between rows */}
       <div className="divide-y divide-border">
         {skillGroups.map((group) => (
