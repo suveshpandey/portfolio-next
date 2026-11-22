@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import TextReveal from "@/components/TextReveal";
+import SectionHeader from "@/components/SectionHeader";
 
 type ExperienceEntry = {
   company: string;
@@ -191,6 +192,8 @@ function ExperienceItem({ exp, idx }: { exp: ExperienceEntry; idx: number }) {
 export default function Experience() {
   return (
     <section id="experience" className="section-wrapper w-full">
+      <SectionHeader title="Experience" />
+
       <div className="relative flex w-full flex-col gap-7">
         <span
           aria-hidden

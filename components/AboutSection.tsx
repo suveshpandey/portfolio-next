@@ -1,8 +1,11 @@
 "use client";
+import SectionHeader from "@/components/SectionHeader";
 
 export default function AboutSection() {
   return (
     <section id="about" className="section-wrapper w-full">
+      <SectionHeader title="About" />
+
       <p className="max-w-[640px] text-[15.5px] leading-[1.9] text-foreground/85">
         I&apos;m a software engineer focused on building{" "}
         <span className="hl hl-blue">AI-powered products</span>. At{" "}

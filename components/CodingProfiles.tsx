@@ -3,6 +3,7 @@ import { useState } from "react";
 import GitHubCalendar from "react-github-calendar";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
+import SectionHeader from "@/components/SectionHeader";
 
 const GITHUB_ACCOUNTS = [
   { id: "personal" as const, username: "suveshpandey", label: "Personal" },
@@ -23,6 +24,8 @@ export default function CodingProfiles() {
 
   return (
     <div id="coding-profiles" className="section-wrapper w-full">
+      <SectionHeader title="Coding Profiles" />
+
       {/* GitHub Card */}
       <motion.div
         whileInView={{ opacity: 1, y: 0 }}

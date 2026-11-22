@@ -14,6 +14,7 @@ import {
 } from "motion/react";
 import { ChevronDown, Globe } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
+import SectionHeader from "@/components/SectionHeader";
 
 type Project = (typeof PROJECTS)[number];
 
@@ -562,6 +563,8 @@ export default function Projects() {
   const reduceMotion = useReducedMotion();
   return (
     <section id="projects" className="section-wrapper w-full">
+      <SectionHeader title="Projects" />
+
       {reduceMotion ? <ProjectList /> : <ProjectStack />}
     </section>
   );
